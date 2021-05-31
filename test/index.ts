@@ -17,23 +17,16 @@ describe("Testing Gremlin", function() {
 
   it("filter node by label should work", async () => {
     const g = new GraphTraversalSource(graph);
-    assert.equal(
-      g
-        .V()
-        .hasLabel("Person")
-        .toList().length,
-      graph.order,
-    );
-    assert.equal(
-      g
-        .V()
-        .hasLabel("Man")
-        .toList().length < graph.order,
-      true,
-    );
+    const result = g
+      .V()
+      .hasLabel("Person")
+      .toList();
+
+    assert.equal(result.length > 0, true);
+    assert.equal(result.length <= graph.order, true);
   });
 
-  it("out on node should work", async () => {
+  it("out should work", async () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(
       g
@@ -42,5 +35,15 @@ describe("Testing Gremlin", function() {
         .toList().length,
       graph.size,
     );
+  });
+
+  it("out with label should work", async () => {
+    const g = new GraphTraversalSource(graph);
+    const result = g
+      .V()
+      .out("KNOWS")
+      .toList();
+    assert.equal(result.length > 0, true);
+    assert.equal(result.length <= graph.size, true);
   });
 });

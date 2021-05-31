@@ -105,7 +105,7 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
     const result: Array<E> = [];
     let ir = this.next();
     while (!ir.done) {
-      result.push(ir.value);
+      result.push(ir.value.value);
       ir = this.next();
     }
     return result;
@@ -119,7 +119,7 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
     const result: Set<E> = new Set<E>();
     let ir = this.next();
     while (!ir.done) {
-      result.add(ir.value);
+      result.add(ir.value.value);
       ir = this.next();
     }
     return result;

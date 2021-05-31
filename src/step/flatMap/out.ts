@@ -1,5 +1,5 @@
-import { NodeKey } from "graphology-types";
-import { Vertex, Traverser } from "../../type";
+import { NodeKey, EdgeKey } from "graphology-types";
+import { Edge, Vertex, Traverser } from "../../type";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FlatMapStep } from "./generic";
 
@@ -19,14 +19,21 @@ export class OutStep extends FlatMapStep<Vertex, Vertex> {
         const graph = traversal.getGraph();
         const config = traversal.getConfig();
         const source = traverser.value;
-
+        if (label) {
+        } else {
+        }
         return graph
-          .outNeighbors(source.id)
-          .map((id: NodeKey) => {
-            const props = graph.getNodeAttributes(id);
-            return new Vertex(id, props[config.vertex_label_field] || [], props);
+          .outEdges(source.id)
+          .map((id: EdgeKey) => {
+            const props = graph.getEdgeAttributes(id);
+            return new Edge(id, props[config.edge_label_field] || "", props);
           })
-          .filter((vertex: Vertex) => (label ? vertex.labels.includes(label) : true))
+          .filter((edge: Edge) => (label ? edge.type === label : true))
+          .map((edge: Edge) => {
+            const nodeKey = graph.opposite(source.id, edge.id);
+            const props = graph.getNodeAttributes(nodeKey);
+            return new Vertex(nodeKey, props[config.vertex_label_field] || [], props);
+          })
           [Symbol.iterator]();
       },
     );

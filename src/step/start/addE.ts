@@ -11,7 +11,7 @@ export class AddEStep extends MapStep<null, Edge> {
       "AddE",
       traversal,
       (): Edge => {
-        return new Edge();
+        return new Edge(new Date().getTime());
       },
     );
   }
