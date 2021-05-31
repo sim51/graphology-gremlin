@@ -1,0 +1,30 @@
+import Graph, { MultiDirectedGraph } from "graphology";
+import { NodeKey, EdgeKey } from "graphology-types";
+import { erdosRenyi } from "graphology-generators/random";
+import faker from "faker";
+
+const NODE_LABELS = ["Man", "Woman", "Other"];
+const EDGE_TYPES = ["KNOWS", "FRIEND_OF", "COLLEAGUE_OF"];
+const randomValue = list => {
+  return list[Math.floor(Math.random() * list.length)];
+};
+
+export function generateRandomGraph(): Graph {
+  const graph: Graph = erdosRenyi(MultiDirectedGraph, { order: 100, probability: 0.5 });
+
+  graph.nodes().forEach((nodeKey: NodeKey) => {
+    graph.mergeNodeAttributes(nodeKey, {
+      "@labels": ["Person", randomValue(NODE_LABELS)],
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      age: faker.datatype.number(),
+      valid: faker.datatype.boolean(),
+    });
+  });
+  graph.edges().forEach((edgeKey: EdgeKey) => {
+    graph.mergeEdgeAttributes(edgeKey, {
+      "@type": randomValue(EDGE_TYPES),
+    });
+  });
+  return graph;
+}
