@@ -49,47 +49,37 @@ export class GraphTraversalSource {
    * List all vertex of the graph or a selection.
    */
   public V<E>(...ids: Array<NodeKey>): GraphTraversal<NodeKey, Vertex> {
-    const gt = new GraphTraversal<NodeKey, Vertex>(this.graph, this.config);
-    gt.addStep(new VStep(gt));
     const nodes = (ids.length > 0 ? ids : this.graph.nodes()).map((id: NodeKey) => new Traverser(id));
-    gt.addStart(nodes[Symbol.iterator]());
-    return gt;
+    const gt = new GraphTraversal<NodeKey, NodeKey>(this.graph, this.config, nodes[Symbol.iterator]());
+    return gt.addStep(new VStep(gt));
   }
 
   /**
    * Create a new vertex.
    */
-  public addV<E>(): GraphTraversal<null, Vertex> {
-    const gt = new GraphTraversal<null, Vertex>(this.graph, this.config);
-    gt.addStep(new AddVStep(gt));
-    const iteratorArray = [null];
-    gt.addStart(iteratorArray[Symbol.iterator]());
-    return gt;
+  public addV<E>(): GraphTraversal<null | string, Vertex> {
+    const gt = new GraphTraversal<null | string, null | string>(this.graph, this.config, this.emptyIterator());
+    return gt.addStep(new AddVStep(gt));
   }
 
   /**
    * List all edges of the graph or a selection.
    */
   public E<E>(...ids: Array<EdgeKey>): GraphTraversal<EdgeKey, Edge> {
-    const gt = new GraphTraversal<EdgeKey, Edge>(this.graph, this.config);
-    gt.addStep(new EStep(gt));
     const edges = (ids.length > 0 ? ids : this.graph.edges()).map((id: EdgeKey) => new Traverser(id));
-    gt.addStart(edges[Symbol.iterator]());
-    return gt;
+    const gt = new GraphTraversal<EdgeKey, EdgeKey>(this.graph, this.config, edges[Symbol.iterator]());
+    return gt.addStep(new EStep(gt));
   }
 
   /**
    * Create a new edge.
    */
-  public addE<E>(): GraphTraversal<null, Edge> {
-    const gt = new GraphTraversal<null, Edge>(this.graph, this.config);
-    gt.addStep(new AddEStep(gt));
-    const iteratorArray = [null];
-    gt.addStart(iteratorArray[Symbol.iterator]());
-    return gt;
+  public addE<E>(): GraphTraversal<null | string, Edge> {
+    const gt = new GraphTraversal<null | string, null | string>(this.graph, this.config, this.emptyIterator());
+    return gt.addStep(new AddEStep(gt));
   }
 
-  public inject(): GraphTraversal<any, any> {
-    throw new Error("Not implemented");
+  private emptyIterator(): Iterator<Traverser<null>> {
+    return [null][Symbol.iterator]();
   }
 }

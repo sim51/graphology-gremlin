@@ -17,17 +17,17 @@ export abstract class Step<S, E> implements Iterator<Traverser<E>> {
   /**
    * Traversal of which the step behave.
    */
-  traversal: GraphTraversal<any, any>;
+  traversal: GraphTraversal<unknown, E>;
 
   /**
-   * The starts object for the step.
+   * Start objects of the step.
    */
   start: Iterator<Traverser<S>> | null = null;
 
   /**
    * Default constructor.
    */
-  constructor(traversal: GraphTraversal<any, any>) {
+  constructor(traversal: GraphTraversal<unknown, E>) {
     this.traversal = traversal;
   }
 
@@ -47,8 +47,4 @@ export abstract class Step<S, E> implements Iterator<Traverser<E>> {
    * Iterator next
    */
   abstract next(): IteratorResult<Traverser<E>>;
-}
-
-export interface StepConstructor<T> {
-  new (traversal: GraphTraversal<any, any>): T;
 }

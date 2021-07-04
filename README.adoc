@@ -1,1 +1,9 @@
 = Gremlin DSL for graphology
+
+== TODO
+
+* Adding test framework for steps
+* Create correct wrapper object for Vertex & Edge
+* Avoid cycles ?? => before to traverse an edge need to check if it is the traversed path
+** In the traverser, storing the traversed path ???
+* Graph config : default is a graph without labels and types !

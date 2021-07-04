@@ -37,7 +37,7 @@ describe("Testing Gremlin", function() {
     );
   });
 
-  it("out with label should work", async () => {
+  it("out with type should work", async () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()

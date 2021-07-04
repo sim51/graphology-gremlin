@@ -1,6 +1,6 @@
 import Graph from "graphology";
-import { Step, StepConstructor } from "../step/generic";
-import { GraphConfiguration, Traverser } from "../type";
+import { Step } from "../step/generic";
+import { GraphConfiguration, Traverser, Vertex } from "../type";
 // filter steps
 import { HasLabelStep } from "../step/filter/hasLabel";
 // flatmap steps
@@ -25,9 +25,16 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
   private start: Iterator<Traverser<S>>;
   private target: Iterator<Traverser<E>> | null = null;
 
-  constructor(graph: Graph, config: GraphConfiguration) {
+  constructor(
+    graph: Graph,
+    config: GraphConfiguration,
+    start: Iterator<Traverser<S>>,
+    steps: Array<Step<any, any>> = [],
+  ) {
     this.graph = graph;
     this.config = config;
+    this.start = start;
+    this.steps = steps;
   }
 
   /**
@@ -40,17 +47,8 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
   /**
    * Add a step to the traversal.
    */
-  addStep(step: Step<any, any>): this {
-    this.steps.push(step);
-    return this;
-  }
-
-  /**
-   * Add a start to the traversal.
-   */
-  addStart(start: Iterator<Traverser<S>>): this {
-    this.start = start;
-    return this;
+  addStep<T>(step: Step<unknown, T>): GraphTraversal<S, T> {
+    return new GraphTraversal<S, T>(this.graph, this.config, this.start, this.steps.concat(step));
   }
 
   getGraph(): Graph {
@@ -81,17 +79,15 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ Filter steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  public hasLabel(label: string): this {
-    this.addStep(new HasLabelStep(this, label));
-    return this;
+  public hasLabel(label: string): GraphTraversal<S, Vertex> {
+    return this.addStep(new HasLabelStep(this, label));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ FlatMap steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  public out(label?: string): this {
-    this.addStep(new OutStep(this, label));
-    return this;
+  public out(label?: string): GraphTraversal<S, Vertex> {
+    return this.addStep(new OutStep(this, label));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

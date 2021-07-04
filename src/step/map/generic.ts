@@ -4,8 +4,7 @@ import { Path, Traverser, Vertex } from "../../type";
 import { Step } from "../generic";
 
 /**
- * Retrieve a list of vertex or all graph vertex.
- * Ex: g.V()
+ * Transform the source data <code>S</code> to the target <code>T</code>>.
  */
 export class MapStep<S, T> extends Step<S, T> {
   label: string;
