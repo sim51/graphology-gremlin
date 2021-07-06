@@ -4,15 +4,19 @@ import { Path, Traverser, Vertex } from "../../type";
 import { Step } from "../generic";
 
 /**
- * Retrieve a list of vertex or all graph vertex.
- * Ex: g.V()
+ * Map the traverser to either true or false, where false will not pass the traverser to the next step.
+ * In short it filters the input.
  */
 export class FilterStep<S> extends Step<S, S> {
   label: string;
   fn: (source: Traverser<S>) => boolean;
 
   /**
-   * Default constructor.
+   * Filter step  constructor
+   *
+   * @param label Name of the step
+   * @param traversal GraphTraversal on which the step is applied
+   * @param fn The filter function, if value is <code>TRUE</code> the traversal result is kept otherwise it is dismissed
    */
   constructor(label: string, traversal: GraphTraversal<S, S>, fn: (source: Traverser<S>) => boolean) {
     super(traversal);
@@ -20,10 +24,16 @@ export class FilterStep<S> extends Step<S, S> {
     this.fn = fn;
   }
 
+  /**
+   * Get the label of the step
+   */
   getLabel(): string {
-    return this.label;
+    return `${this.label}Filter`;
   }
 
+  /**
+   * Get the next item from the iterator.
+   */
   next(): IteratorResult<Traverser<S>> {
     let ir = this.start.next();
     let nextFound = false;

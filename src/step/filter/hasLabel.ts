@@ -1,18 +1,20 @@
-import { Vertex, Traverser } from "../../type";
+import { Vertex, Edge, Traverser } from "../../type";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FilterStep } from "./generic";
 
 /**
- * Retrieve a list of edges or all graph edges.
- * Ex: g.E()
+ * Filter the traverser if its element doesn't have one of the specified labels.
  */
-export class HasLabelStep extends FilterStep<Vertex> {
-  /**
-   * Default constructor.
-   */
-  constructor(traversal: GraphTraversal<any, any>, label: string) {
-    super("hasLabel", traversal, (traverser: Traverser<Vertex>): boolean => {
-      return traverser.value.labels.includes(label);
+export class HasLabelStep extends FilterStep<Vertex | Edge> {
+  constructor(traversal: GraphTraversal<any, any>, labels: Array<string>) {
+    super("hasLabel", traversal, (traverser: Traverser<Vertex | Edge>): boolean => {
+      if (traverser.value instanceof Vertex) {
+        return traverser.value.labels.some(label => labels.includes(label));
+      }
+      if (traverser.value instanceof Edge) {
+        return labels.includes(traverser.value.type);
+      }
+      return false;
     });
   }
 }

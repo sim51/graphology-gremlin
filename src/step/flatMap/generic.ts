@@ -4,8 +4,7 @@ import { Path, Traverser } from "../../type";
 import { Step } from "../generic";
 
 /**
- * Retrieve a list of vertex or all graph vertex.
- * Ex: g.V()
+ * Map the traverser to an iterator of E objects that are streamed to the next step.
  */
 export class FlatMapStep<S, E> extends Step<S, E> {
   private label: string;

@@ -24,6 +24,8 @@ export function generateRandomGraph(): Graph {
   graph.edges().forEach((edgeKey: EdgeKey) => {
     graph.mergeEdgeAttributes(edgeKey, {
       "@type": randomValue(EDGE_TYPES),
+      weight: Math.random(),
+      timestamp: new Date().getTime(),
     });
   });
   return graph;

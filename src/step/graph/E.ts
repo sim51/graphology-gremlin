@@ -16,7 +16,9 @@ export class EStep extends MapStep<EdgeKey, Edge> {
       "E",
       traversal,
       (traverser: Traverser<EdgeKey>): Edge => {
-        return new Edge(traverser.value);
+        const id = traverser.value;
+        const props = traversal.getGraph().getEdgeAttributes(id);
+        return new Edge(id, props[traversal.getConfig().edge_label_field], props);
       },
     );
   }

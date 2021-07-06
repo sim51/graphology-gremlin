@@ -4,7 +4,7 @@ import { Path, Traverser, Vertex } from "../../type";
 import { Step } from "../generic";
 
 /**
- * Transform the source data <code>S</code> to the target <code>T</code>>.
+ * Map the traverser of type S to some object of type T for the next step to process.
  */
 export class MapStep<S, T> extends Step<S, T> {
   label: string;
