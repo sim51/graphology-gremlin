@@ -20,7 +20,7 @@ export class MapStep<S, T> extends Step<S, T> {
   }
 
   getLabel(): string {
-    return this.label;
+    return `${this.label}Map`;
   }
 
   next(): IteratorResult<Traverser<T>> {

@@ -9,8 +9,9 @@ import { HasIdStep } from "../step/filter/hasId";
 import { HasKeyStep } from "../step/filter/hasKey";
 import { HasNotStep } from "../step/filter/hasNot";
 
-// filter steps
+// map steps
 import { PropertiesStep } from "../step/map/properties";
+import { IdentityStep } from "../step/map/identity";
 
 // flatmap steps
 import { OutStep } from "../step/flatMap/out";
@@ -106,6 +107,9 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   public properties(...properties: Array<string>): GraphTraversal<S, Object> {
     return this.addStep(new PropertiesStep(this, properties));
+  }
+  public identity(): GraphTraversal<S, NodeKey | EdgeKey> {
+    return this.addStep(new IdentityStep(this));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
