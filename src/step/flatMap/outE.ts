@@ -4,15 +4,15 @@ import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FlatMapStep } from "./generic";
 
 /**
- * Move to the outgoing adjacent vertices given the edge labels.
+ * Move to the incoming incident edges given the edge labels.
  * @see https://tinkerpop.apache.org/docs/current/reference/#vertex-steps
  */
-export class OutStep extends FlatMapStep<Vertex, Vertex> {
+export class OutEStep extends FlatMapStep<Vertex, Edge> {
   constructor(traversal: GraphTraversal<any, any>, labels: Array<string>) {
     super(
-      "out",
+      "outE",
       traversal,
-      (traverser: Traverser<Vertex>): Iterator<Vertex> => {
+      (traverser: Traverser<Vertex>): Iterator<Edge> => {
         const graph = traversal.getGraph();
         const config = traversal.getConfig();
         const source = traverser.value;
@@ -23,11 +23,6 @@ export class OutStep extends FlatMapStep<Vertex, Vertex> {
             return new Edge(id, props[config.edge_label_field] || "", props);
           })
           .filter((edge: Edge) => (labels.length > 0 ? labels.includes(edge.type) : true))
-          .map((edge: Edge) => {
-            const nodeKey = graph.opposite(source.id, edge.id);
-            const props = graph.getNodeAttributes(nodeKey);
-            return new Vertex(nodeKey, props[config.vertex_label_field] || [], props);
-          })
           [Symbol.iterator]();
       },
     );

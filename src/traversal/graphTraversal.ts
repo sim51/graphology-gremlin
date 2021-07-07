@@ -14,7 +14,17 @@ import { PropertiesStep } from "../step/map/properties";
 import { IdentityStep } from "../step/map/identity";
 
 // flatmap steps
+import { BothStep } from "../step/flatMap/both";
+import { BothEStep } from "../step/flatMap/bothE";
+import { BothVStep } from "../step/flatMap/bothV";
+import { InStep } from "../step/flatMap/in";
+import { InEStep } from "../step/flatMap/inE";
+import { InVStep } from "../step/flatMap/inV";
 import { OutStep } from "../step/flatMap/out";
+import { OutEStep } from "../step/flatMap/outE";
+import { OutVStep } from "../step/flatMap/outV";
+import { OtherVStep } from "../step/flatMap/otherV";
+
 /**
  * Extract from https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/Traversal.java
  *
@@ -115,8 +125,35 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ FlatMap steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  public otherV(): GraphTraversal<S, Vertex> {
+    return this.addStep(new OtherVStep(this));
+  }
+  public both(...labels: Array<string>): GraphTraversal<S, Vertex> {
+    return this.addStep(new BothStep(this, labels));
+  }
+  public bothE(...labels: Array<string>): GraphTraversal<S, Edge> {
+    return this.addStep(new BothEStep(this, labels));
+  }
+  public bothV(): GraphTraversal<S, Vertex> {
+    return this.addStep(new BothVStep(this));
+  }
+  public in(...labels: Array<string>): GraphTraversal<S, Vertex> {
+    return this.addStep(new InStep(this, labels));
+  }
+  public inE(...labels: Array<string>): GraphTraversal<S, Edge> {
+    return this.addStep(new InEStep(this, labels));
+  }
+  public inV(): GraphTraversal<S, Vertex> {
+    return this.addStep(new InVStep(this));
+  }
   public out(...labels: Array<string>): GraphTraversal<S, Vertex> {
     return this.addStep(new OutStep(this, labels));
+  }
+  public outE(...labels: Array<string>): GraphTraversal<S, Edge> {
+    return this.addStep(new OutEStep(this, labels));
+  }
+  public outV(): GraphTraversal<S, Vertex> {
+    return this.addStep(new OutVStep(this));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

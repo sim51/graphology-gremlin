@@ -4,20 +4,20 @@ import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FlatMapStep } from "./generic";
 
 /**
- * Move to the outgoing adjacent vertices given the edge labels.
+ * Move to the incoming adjacent vertices given the edge labels
  * @see https://tinkerpop.apache.org/docs/current/reference/#vertex-steps
  */
-export class OutStep extends FlatMapStep<Vertex, Vertex> {
+export class InStep extends FlatMapStep<Vertex, Vertex> {
   constructor(traversal: GraphTraversal<any, any>, labels: Array<string>) {
     super(
-      "out",
+      "in",
       traversal,
       (traverser: Traverser<Vertex>): Iterator<Vertex> => {
         const graph = traversal.getGraph();
         const config = traversal.getConfig();
         const source = traverser.value;
         return graph
-          .outEdges(source.id)
+          .inEdges(source.id)
           .map((id: EdgeKey) => {
             const props = graph.getEdgeAttributes(id);
             return new Edge(id, props[config.edge_label_field] || "", props);
