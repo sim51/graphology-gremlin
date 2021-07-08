@@ -1,1 +1,1 @@
-{"version":3,"file":"graphConfiguration.js","sourceRoot":"","sources":["../../../src/type/graphConfiguration.ts"],"names":[],"mappings":";;;AAKA,wCAAwC;AAC3B,QAAA,2BAA2B,GAAuB;IAC7D,kBAAkB,EAAE,SAAS;IAC7B,gBAAgB,EAAE,OAAO;CAC1B,CAAC"}
+{"version":3,"file":"graphConfiguration.js","sourceRoot":"","sources":["../../../src/type/graphConfiguration.ts"],"names":[],"mappings":";;;AAMa,QAAA,2BAA2B,GAAuB;IAC7D,kBAAkB,EAAE,SAAS;IAC7B,gBAAgB,EAAE,OAAO;CAC1B,CAAC"}

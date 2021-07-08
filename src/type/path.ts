@@ -9,7 +9,7 @@ export interface PathSegment {
 
 export class Path {
   source: Vertex;
-  target: Vertex | null;
+  target: Vertex | null = null;
   segments: Array<PathSegment> = [];
 
   constructor(path: Array<PathSegment> | Vertex) {

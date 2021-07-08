@@ -1,6 +1,6 @@
 import { NodeKey } from "graphology-types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
-import { Path, Traverser, Vertex } from "../../type";
+import { Traverser, Vertex } from "../../type";
 import { MapStep } from "../map/generic";
 
 /**

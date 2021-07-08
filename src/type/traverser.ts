@@ -16,12 +16,12 @@ export class Traverser<S> {
   /**
    * Traverser path, ie. the value of each previous steps with their name
    */
-  path: Array<{ label: string; value: any }> = [];
+  path: Array<{ label: string; value: unknown }> = [];
 
   /**
    * Default constructor.
    */
-  constructor(value: S, path?: Array<any>) {
+  constructor(value: S, path?: Array<{ label: string; value: unknown }>) {
     this.value = value;
     if (path) this.path = path;
   }
@@ -36,7 +36,7 @@ export class Traverser<S> {
   /**
    * Return the path of the traverser.
    */
-  getPath(): Array<any> {
+  getPath(): Array<{ label: string; value: unknown }> {
     return this.path;
   }
 
@@ -44,7 +44,7 @@ export class Traverser<S> {
    * Create a new traverser for the next iteration.
    */
   makeNextTraverser<T>(label: string, value: T) {
-    const copyPath = [].concat(this.path);
+    const copyPath = this.path.slice();
     copyPath.push({ label, value });
     return new Traverser<T>(value, copyPath);
   }

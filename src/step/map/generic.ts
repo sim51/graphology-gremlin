@@ -1,6 +1,5 @@
-import { NodeKey } from "graphology-types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
-import { Path, Traverser, Vertex } from "../../type";
+import { Traverser } from "../../type";
 import { Step } from "../generic";
 
 /**
@@ -24,6 +23,8 @@ export class MapStep<S, T> extends Step<S, T> {
   }
 
   next(): IteratorResult<Traverser<T>> {
+    if (this.start === null) return { done: true, value: null };
+
     const ir = this.start.next();
     if (ir.done) return ir;
     else {

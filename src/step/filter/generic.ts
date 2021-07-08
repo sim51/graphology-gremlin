@@ -1,6 +1,5 @@
-import { NodeKey } from "graphology-types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
-import { Path, Traverser, Vertex } from "../../type";
+import { Traverser } from "../../type";
 import { Step } from "../generic";
 
 /**
@@ -35,6 +34,8 @@ export class FilterStep<S> extends Step<S, S> {
    * Get the next item from the iterator.
    */
   next(): IteratorResult<Traverser<S>> {
+    if (this.start === null) return { done: true, value: null };
+
     let ir = this.start.next();
     let nextFound = false;
     while (!ir.done && !nextFound) {

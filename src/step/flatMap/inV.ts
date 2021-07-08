@@ -1,5 +1,5 @@
-import { NodeKey, EdgeKey } from "graphology-types";
-import { Edge, Vertex, Traverser } from "../../type";
+import { EdgeKey } from "graphology-types";
+import { Vertex, Traverser } from "../../type";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FlatMapStep } from "./generic";
 

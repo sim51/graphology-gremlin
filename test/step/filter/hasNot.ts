@@ -1,6 +1,5 @@
 import assert from "assert";
 import { generateRandomGraph } from "../../utils";
-import { Vertex, Edge, Object } from "../../../src/type";
 import { GraphTraversalSource } from "../../../src/index";
 
 const graph = generateRandomGraph();
@@ -18,7 +17,6 @@ describe("Step - Filter - hasNot", function() {
 
     it("with values should work", async () => {
       const g = new GraphTraversalSource(graph);
-      const nodeId = graph.nodes()[0];
       const result = g
         .V()
         .hasNot("name", "email")

@@ -1,6 +1,5 @@
-import { NodeKey } from "graphology-types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
-import { Path, Traverser } from "../../type";
+import { Traverser } from "../../type";
 import { Step } from "../generic";
 
 /**
@@ -26,18 +25,24 @@ export class FlatMapStep<S, E> extends Step<S, E> {
   }
 
   next(): IteratorResult<Traverser<E>> {
-    // init
-    if (this.current === null) {
-      if (this.nextInnerIterator()) return { done: true, value: undefined };
+    // init the current and inner iterator by calling `nextInnerIterator`
+    if (this.current === null && this.nextInnerIterator()) {
+      return { done: true, value: null };
+    }
+
+    // if even after the init the iinter iter is null
+    // we just return a done iter value
+    if (this.innerIterator === null || this.current === null) {
+      return { done: true, value: null };
     }
 
     // get the next item
     let iir = this.innerIterator.next();
-    // serach next one
+    // search next one
     while (iir.done && !this.nextInnerIterator()) {
       iir = this.innerIterator.next();
     }
-    if (iir.done) return { done: true, value: undefined };
+    if (iir.done) return { done: true, value: null };
 
     // compute the next element
     const item = iir.value;
@@ -52,8 +57,9 @@ export class FlatMapStep<S, E> extends Step<S, E> {
    * @returns if the main iterator is over or not
    */
   private nextInnerIterator(): boolean {
+    if (this.start === null) return true;
     this.current = this.start.next();
     this.innerIterator = this.current.done ? [][Symbol.iterator]() : this.fn(this.current.value);
-    return this.current.done;
+    return this.current.done ? this.current.done : true;
   }
 }

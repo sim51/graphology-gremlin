@@ -5,7 +5,7 @@ import faker from "faker";
 
 const NODE_LABELS = ["Man", "Woman", "Other"];
 const EDGE_TYPES = ["KNOWS", "FRIEND_OF", "COLLEAGUE_OF"];
-const randomValue = list => {
+const randomValue = (list: Array<string>): string => {
   return list[Math.floor(Math.random() * list.length)];
 };
 

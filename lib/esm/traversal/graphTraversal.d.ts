@@ -1,58 +1,38 @@
 import Graph from "graphology";
+import { EdgeKey, NodeKey } from "graphology-types";
 import { Step } from "../step/generic";
-import { GraphConfiguration, Traverser } from "../type";
-/**
- * Extract from https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/Traversal.java
- *
- * A {@link Traversal} represents a directed walk over a {@link Graph}.
- * This is the base interface for all traversal's, where each extending interface is seen as a domain specific language.
- * For example, {@link GraphTraversal} is a domain specific language for traversing a graph using "graph concepts" (e.g. vertices, edges).
- * Another example may represent the graph using "social concepts" (e.g. people, cities, artifacts).
- * A {@link Traversal} is evaluated in one of two ways: iterator-based OLTP or {@link GraphComputer}-based OLAP.
- * OLTP traversals leverage an iterator and are executed within a single JVM (with data access allowed to be remote).
- * OLAP traversals leverage {@link GraphComputer} and are executed between multiple JVMs (and/or cores).
- *
- * @author Marko A. Rodriguez (http://markorodriguez.com)
- */
+import { GraphConfiguration, Traverser, Vertex, Edge, Object } from "../type";
 export declare class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
     private graph;
     private config;
     private steps;
     private start;
     private target;
-    constructor(graph: Graph, config: GraphConfiguration);
-    /**
-     * Consume the iterator result.
-     */
+    constructor(graph: Graph, config: GraphConfiguration, start: Iterator<Traverser<S>>, steps?: Array<Step<any, any>>);
     next(): IteratorResult<Traverser<E>>;
-    /**
-     * Add a step to the traversal.
-     */
-    addStep(step: Step<any, any>): this;
-    /**
-     * Add a start to the traversal.
-     */
-    addStart(start: Iterator<Traverser<S>>): this;
+    addStep<T>(step: Step<unknown, T>): GraphTraversal<S, T>;
     getGraph(): Graph;
     getConfig(): GraphConfiguration;
-    /**
-     * Return the target iterator of the traversal.
-     * The target iterator is created if it's not the case.
-     * So this function in fact execute the traversal.
-     */
     private getTarget;
-    hasLabel(label: string): this;
-    /**
-     * Give the traversal result as a list.
-     */
+    hasId(...keys: Array<EdgeKey> | Array<NodeKey>): GraphTraversal<S, Vertex | Edge>;
+    hasKey(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Object>;
+    hasLabel(...labels: Array<string>): GraphTraversal<S, Vertex | Edge>;
+    hasNot(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Object>;
+    properties(...properties: Array<string>): GraphTraversal<S, Object>;
+    identity(): GraphTraversal<S, NodeKey | EdgeKey>;
+    count(): GraphTraversal<S, number>;
+    fold(): GraphTraversal<S, Array<E>>;
+    otherV(): GraphTraversal<S, Vertex>;
+    both(...labels: Array<string>): GraphTraversal<S, Vertex>;
+    bothE(...labels: Array<string>): GraphTraversal<S, Edge>;
+    bothV(): GraphTraversal<S, Vertex>;
+    in(...labels: Array<string>): GraphTraversal<S, Vertex>;
+    inE(...labels: Array<string>): GraphTraversal<S, Edge>;
+    inV(): GraphTraversal<S, Vertex>;
+    out(...labels: Array<string>): GraphTraversal<S, Vertex>;
+    outE(...labels: Array<string>): GraphTraversal<S, Edge>;
+    outV(): GraphTraversal<S, Vertex>;
     toList(): Array<E>;
-    /**
-     * Give the traversal result as a Set.
-     * TODO: need to remove duplicates by checking there footprint ???
-     */
     toSet(): Set<E>;
-    /**
-     * Give the explain of the traversal.
-     */
     explain(): void;
 }

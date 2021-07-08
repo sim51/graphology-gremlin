@@ -1,19 +1,24 @@
 import Graph from "graphology";
 import { EdgeKey, NodeKey } from "graphology-types";
 import { Step } from "../step/generic";
-import { GraphConfiguration, Traverser, Vertex, Edge } from "../type";
+import { GraphConfiguration, Traverser, Vertex, Edge, Object } from "../type";
+// import { Predicate } from "./predicate";
 
-// filter steps
-import { HasLabelStep } from "../step/filter/hasLabel";
+// Filter steps
+// import { HasStep } from "../step/filter/has";
 import { HasIdStep } from "../step/filter/hasId";
 import { HasKeyStep } from "../step/filter/hasKey";
+import { HasLabelStep } from "../step/filter/hasLabel";
 import { HasNotStep } from "../step/filter/hasNot";
 
-// map steps
+// Map steps
 import { PropertiesStep } from "../step/map/properties";
 import { IdentityStep } from "../step/map/identity";
+// Map reducing barrier steps
+import { CountStep } from "../step/map/reducingBarrier/count";
+import { FoldStep } from "../step/map/reducingBarrier/fold";
 
-// flatmap steps
+// FlatMap steps
 import { BothStep } from "../step/flatMap/both";
 import { BothEStep } from "../step/flatMap/bothE";
 import { BothVStep } from "../step/flatMap/bothV";
@@ -99,14 +104,21 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ Filter steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  public hasLabel(...labels: Array<string>): GraphTraversal<S, Vertex | Edge> {
-    return this.addStep(new HasLabelStep(this, labels));
-  }
+  // public has(
+  //   arg1: string,
+  //   arg2?: string | Predicate<Object> | unknown,
+  //   arg3?: unknown,
+  // ): GraphTraversal<S, Vertex | Edge | Object> {
+  //   return this.addStep(new HasStep(this, arg1, arg2, arg3));
+  // }
   public hasId(...keys: Array<EdgeKey> | Array<NodeKey>): GraphTraversal<S, Vertex | Edge> {
     return this.addStep(new HasIdStep(this, keys));
   }
   public hasKey(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Object> {
     return this.addStep(new HasKeyStep(this, keys));
+  }
+  public hasLabel(...labels: Array<string>): GraphTraversal<S, Vertex | Edge> {
+    return this.addStep(new HasLabelStep(this, labels));
   }
   public hasNot(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Object> {
     return this.addStep(new HasNotStep(this, keys));
@@ -122,6 +134,15 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
     return this.addStep(new IdentityStep(this));
   }
 
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~ Map reducing barrier steps
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  public count(): GraphTraversal<S, number> {
+    return this.addStep(new CountStep(this));
+  }
+  public fold(): GraphTraversal<S, Array<E>> {
+    return this.addStep(new FoldStep<E>(this));
+  }
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ FlatMap steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
