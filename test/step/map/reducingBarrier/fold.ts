@@ -13,7 +13,7 @@ describe("Step - Map - reducingBarrier - fold", function() {
       .next().value;
 
     assert.equal(result instanceof Array, true);
-    assert.equal(result.length, graph.size);
+    assert.equal(result.length, graph.order);
   });
 
   it("should work on edge", async () => {
@@ -24,7 +24,7 @@ describe("Step - Map - reducingBarrier - fold", function() {
       .next().value;
 
     assert.equal(result instanceof Array, true);
-    assert.equal(result.length, graph.order);
+    assert.equal(result.length, graph.size);
   });
 
   it("should work on identifier", async () => {

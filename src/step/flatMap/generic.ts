@@ -30,7 +30,7 @@ export class FlatMapStep<S, E> extends Step<S, E> {
       return { done: true, value: null };
     }
 
-    // if even after the init the iinter iter is null
+    // if even after the init the inner iter is null
     // we just return a done iter value
     if (this.innerIterator === null || this.current === null) {
       return { done: true, value: null };
@@ -54,12 +54,13 @@ export class FlatMapStep<S, E> extends Step<S, E> {
 
   /**
    * Populate the next inner iterator.
-   * @returns if the main iterator is over or not
+   * @returns <code>true</code> if the main iterator is over or not
    */
   private nextInnerIterator(): boolean {
     if (this.start === null) return true;
     this.current = this.start.next();
-    this.innerIterator = this.current.done ? [][Symbol.iterator]() : this.fn(this.current.value);
-    return this.current.done ? this.current.done : true;
+    if (this.current.done) return true;
+    this.innerIterator = this.fn(this.current.value);
+    return false;
   }
 }

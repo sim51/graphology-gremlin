@@ -26,7 +26,7 @@ export class MapStep<S, T> extends Step<S, T> {
     if (this.start === null) return { done: true, value: null };
 
     const ir = this.start.next();
-    if (ir.done) return ir;
+    if (ir.done) return { done: true, value: null };
     else {
       // execute the step with the map function
       const traverser = ir.value;

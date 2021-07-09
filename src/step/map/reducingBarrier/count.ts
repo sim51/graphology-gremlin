@@ -7,6 +7,9 @@ import { ReducingBarrierStep } from "./generic";
  */
 export class CountStep extends ReducingBarrierStep<unknown, number> {
   constructor(traversal: GraphTraversal<any, any>) {
-    super("count", traversal, 0, (accumulator: number): number => accumulator + 1);
+    super("count", traversal, 0, (previousValue: number) => {
+      previousValue += 1;
+      return previousValue;
+    });
   }
 }

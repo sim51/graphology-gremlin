@@ -28,7 +28,7 @@ export class ReducingBarrierStep<S, T> extends Step<S, T> {
   }
 
   getLabel(): string {
-    return `${this.label}ReduceBarrierStep`;
+    return `${this.label}ReduceBarrier`;
   }
 
   next(): IteratorResult<Traverser<T>> {
@@ -36,7 +36,7 @@ export class ReducingBarrierStep<S, T> extends Step<S, T> {
 
     // get next iterator value and check if its already out
     let ir = this.start.next();
-    if (ir.done) return ir;
+    if (ir.done) return { done: true, value: null };
 
     // consume the full iterator and build an array
     const startsValues: Array<S> = [];
@@ -44,10 +44,11 @@ export class ReducingBarrierStep<S, T> extends Step<S, T> {
       startsValues.push(ir.value.value);
       ir = this.start.next();
     }
+    // console.log(startsValues, startsValues.reduce(this.reducer, this.initValue));
 
     return {
-      done: true,
-      value: startsValues.reduce(this.reducer, this.initValue),
+      done: false,
+      value: new Traverser<T>(startsValues.reduce(this.reducer, this.initValue)),
     };
   }
 }

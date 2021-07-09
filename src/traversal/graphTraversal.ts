@@ -43,7 +43,7 @@ import { OtherVStep } from "../step/flatMap/otherV";
  *
  * @author Marko A. Rodriguez (http://markorodriguez.com)
  */
-export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
+export class GraphTraversal<S, E> implements Iterator<E> {
   private graph: Graph;
   private config: GraphConfiguration;
   private steps: Array<Step<any, any>> = [];
@@ -65,23 +65,61 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
   /**
    * Consume the iterator result.
    */
-  next(): IteratorResult<Traverser<E>> {
-    return this.getTarget().next();
+  public next(): IteratorResult<E> {
+    const ir = this.getTarget().next();
+    return {
+      done: ir.done,
+      value: ir.value ? ir.value.value : null,
+    };
+  }
+
+  public getGraph(): Graph {
+    return this.graph;
+  }
+
+  public getConfig(): GraphConfiguration {
+    return this.config;
+  }
+
+  /**
+   * Give the traversal result as a list.
+   */
+  public toList(): Array<E> {
+    const result: Array<E> = [];
+    let ir = this.next();
+    while (!ir.done) {
+      result.push(ir.value);
+      ir = this.next();
+    }
+    return result;
+  }
+
+  /**
+   * Give the traversal result as a Set.
+   * TODO: need to remove duplicates by checking there footprint ???
+   */
+  public toSet(): Set<E> {
+    const result: Set<E> = new Set<E>();
+    let ir = this.next();
+    while (!ir.done) {
+      result.add(ir.value);
+      ir = this.next();
+    }
+    return result;
+  }
+
+  /**
+   * Give the explain of the traversal.
+   */
+  public explain(): string {
+    return this.steps.map(s => s.getLabel()).join(" -> ");
   }
 
   /**
    * Add a step to the traversal.
    */
-  addStep<T>(step: Step<unknown, T>): GraphTraversal<S, T> {
+  public addStep<T>(step: Step<unknown, T>): GraphTraversal<S, T> {
     return new GraphTraversal<S, T>(this.graph, this.config, this.start, this.steps.concat(step));
-  }
-
-  getGraph(): Graph {
-    return this.graph;
-  }
-
-  getConfig(): GraphConfiguration {
-    return this.config;
   }
 
   /**
@@ -175,43 +213,5 @@ export class GraphTraversal<S, E> implements Iterator<Traverser<E>> {
   }
   public outV(): GraphTraversal<S, Vertex> {
     return this.addStep(new OutVStep(this));
-  }
-
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  // ~ Terminal steps
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  /**
-   * Give the traversal result as a list.
-   */
-  public toList(): Array<E> {
-    const result: Array<E> = [];
-    let ir = this.next();
-    while (!ir.done) {
-      result.push(ir.value.value);
-      ir = this.next();
-    }
-    return result;
-  }
-
-  /**
-   * Give the traversal result as a Set.
-   * TODO: need to remove duplicates by checking there footprint ???
-   */
-  public toSet(): Set<E> {
-    const result: Set<E> = new Set<E>();
-    let ir = this.next();
-    while (!ir.done) {
-      result.add(ir.value.value);
-      ir = this.next();
-    }
-    return result;
-  }
-
-  /**
-   * Give the explain of the traversal.
-   */
-  public explain(): void {
-    throw new Error("Not implemented");
   }
 }

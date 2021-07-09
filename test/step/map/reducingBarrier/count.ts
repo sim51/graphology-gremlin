@@ -11,19 +11,32 @@ describe("Step - Map - reducingBarrier - count", function() {
       g
         .V()
         .count()
-        .count(),
+        .count()
+        .next().value,
       1,
     );
   });
 
   it("should work on vertex", async () => {
     const g = new GraphTraversalSource(graph);
-    assert.equal(g.V().count(), graph.size);
+    assert.equal(
+      g
+        .V()
+        .count()
+        .next().value,
+      graph.order,
+    );
   });
 
   it("should work on edge", async () => {
     const g = new GraphTraversalSource(graph);
-    assert.equal(g.E().count(), graph.order);
+    assert.equal(
+      g
+        .E()
+        .count()
+        .next().value,
+      graph.size,
+    );
   });
 
   it("should work on identifier", async () => {
@@ -32,8 +45,9 @@ describe("Step - Map - reducingBarrier - count", function() {
       g
         .V()
         .identity()
-        .count(),
-      graph.size,
+        .count()
+        .next().value,
+      graph.order,
     );
   });
 });
