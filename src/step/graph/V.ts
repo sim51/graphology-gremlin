@@ -11,7 +11,7 @@ export class VStep extends MapStep<NodeKey, Vertex> {
   /**
    * Default constructor.
    */
-  constructor(traversal: GraphTraversal<any, any>) {
+  constructor(traversal: GraphTraversal<unknown, Vertex>) {
     super(
       "V",
       traversal,

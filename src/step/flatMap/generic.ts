@@ -14,7 +14,7 @@ export class FlatMapStep<S, E> extends Step<S, E> {
   /**
    * Default constructor.
    */
-  constructor(label: string, traversal: GraphTraversal<S, E>, fn: (source: Traverser<S>) => Iterator<E>) {
+  constructor(label: string, traversal: GraphTraversal<unknown, E>, fn: (source: Traverser<S>) => Iterator<E>) {
     super(traversal);
     this.label = label;
     this.fn = fn;

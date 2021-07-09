@@ -50,16 +50,26 @@ export class GraphTraversalSource {
    */
   public V(...ids: Array<NodeKey>): GraphTraversal<NodeKey, Vertex> {
     const nodes = (ids.length > 0 ? ids : this.graph.nodes()).map((id: NodeKey) => new Traverser(id));
-    const gt = new GraphTraversal<NodeKey, NodeKey>(this.graph, this.config, nodes[Symbol.iterator]());
-    return gt.addStep(new VStep(gt));
+    return new GraphTraversal<NodeKey, Vertex>(
+      this.graph,
+      this.config,
+      nodes[Symbol.iterator](),
+      [],
+      (gt: GraphTraversal<NodeKey, Vertex>) => new VStep(gt),
+    );
   }
 
   /**
    * Create a new vertex.
    */
   public addV(): GraphTraversal<null | string, Vertex> {
-    const gt = new GraphTraversal<null | string, null | string>(this.graph, this.config, this.emptyIterator());
-    return gt.addStep(new AddVStep(gt));
+    return new GraphTraversal<null | string, Vertex>(
+      this.graph,
+      this.config,
+      this.emptyIterator(),
+      [],
+      (gt: GraphTraversal<null | string, Vertex>) => new AddVStep(gt),
+    );
   }
 
   /**
@@ -67,16 +77,26 @@ export class GraphTraversalSource {
    */
   public E(...ids: Array<EdgeKey>): GraphTraversal<EdgeKey, Edge> {
     const edges = (ids.length > 0 ? ids : this.graph.edges()).map((id: EdgeKey) => new Traverser(id));
-    const gt = new GraphTraversal<EdgeKey, EdgeKey>(this.graph, this.config, edges[Symbol.iterator]());
-    return gt.addStep(new EStep(gt));
+    return new GraphTraversal<EdgeKey, Edge>(
+      this.graph,
+      this.config,
+      edges[Symbol.iterator](),
+      [],
+      (gt: GraphTraversal<EdgeKey, Edge>) => new EStep(gt),
+    );
   }
 
   /**
    * Create a new edge.
    */
   public addE(): GraphTraversal<null | string, Edge> {
-    const gt = new GraphTraversal<null | string, null | string>(this.graph, this.config, this.emptyIterator());
-    return gt.addStep(new AddEStep(gt));
+    return new GraphTraversal<null | string, Edge>(
+      this.graph,
+      this.config,
+      this.emptyIterator(),
+      [],
+      (gt: GraphTraversal<null | string, Edge>) => new AddEStep(gt),
+    );
   }
 
   private emptyIterator(): Iterator<Traverser<null>> {

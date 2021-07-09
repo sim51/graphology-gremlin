@@ -13,7 +13,7 @@ export class AddVStep extends MapStep<string | null, Vertex> {
   /**
    * Default constructor.
    */
-  constructor(traversal: GraphTraversal<any, any>) {
+  constructor(traversal: GraphTraversal<unknown, Vertex>) {
     super(
       "AddV",
       traversal,

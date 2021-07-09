@@ -14,7 +14,7 @@ export class AddEStep extends MapStep<null, Edge> {
   /**
    * Default constructor.
    */
-  constructor(traversal: GraphTraversal<any, any>) {
+  constructor(traversal: GraphTraversal<unknown, Edge>) {
     super(
       "AddE",
       traversal,

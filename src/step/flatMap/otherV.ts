@@ -9,7 +9,7 @@ import { FlatMapStep } from "./generic";
  * TODO: need check for its definition / implementation
  */
 export class OtherVStep extends FlatMapStep<Vertex, Vertex> {
-  constructor(traversal: GraphTraversal<any, any>) {
+  constructor(traversal: GraphTraversal<unknown, Vertex>) {
     super(
       "otherV",
       traversal,

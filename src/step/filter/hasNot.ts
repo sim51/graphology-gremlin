@@ -7,7 +7,7 @@ import { FilterStep } from "./generic";
  * https://tinkerpop.apache.org/docs/current/reference/#has-step
  */
 export class HasNotStep extends FilterStep<Edge | Vertex | Values> {
-  constructor(traversal: GraphTraversal<any, any>, keys: Array<string>) {
+  constructor(traversal: GraphTraversal<unknown, Edge | Vertex | Values>, keys: Array<string>) {
     super("hasNot", traversal, (traverser: Traverser<Edge | Vertex | Values>): boolean => {
       const value: Values =
         traverser.value instanceof Vertex || traverser.value instanceof Edge

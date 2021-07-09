@@ -10,7 +10,7 @@ export class PropertiesStep extends MapStep<Edge | Vertex | Values, Values> {
   /**
    * Default constructor.
    */
-  constructor(traversal: GraphTraversal<any, any>, properties: Array<string>) {
+  constructor(traversal: GraphTraversal<unknown, Values>, properties: Array<string>) {
     super(
       "properties",
       traversal,

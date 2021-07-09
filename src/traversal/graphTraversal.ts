@@ -46,7 +46,7 @@ import { OtherVStep } from "../step/flatMap/otherV";
 export class GraphTraversal<S, E> implements Iterator<E> {
   private graph: Graph;
   private config: GraphConfiguration;
-  private steps: Array<Step<any, any>> = [];
+  private steps: Array<Step<unknown, unknown>> = [];
   private start: Iterator<Traverser<S>>;
   private target: Iterator<Traverser<E>> | null = null;
 
@@ -54,12 +54,13 @@ export class GraphTraversal<S, E> implements Iterator<E> {
     graph: Graph,
     config: GraphConfiguration,
     start: Iterator<Traverser<S>>,
-    steps: Array<Step<any, any>> = [],
+    steps: Array<Step<unknown, unknown>> = [],
+    newStep?: (gt: GraphTraversal<S, E>) => Step<unknown, E>,
   ) {
     this.graph = graph;
     this.config = config;
     this.start = start;
-    this.steps = steps;
+    this.steps = newStep ? steps.concat(newStep(this)) : steps;
   }
 
   /**
@@ -118,8 +119,8 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   /**
    * Add a step to the traversal.
    */
-  public addStep<T>(step: Step<unknown, T>): GraphTraversal<S, T> {
-    return new GraphTraversal<S, T>(this.graph, this.config, this.start, this.steps.concat(step));
+  public addStep<T>(stepBuilder: (gt: GraphTraversal<S, T>) => Step<unknown, T>): GraphTraversal<S, T> {
+    return new GraphTraversal<S, T>(this.graph, this.config, this.start, this.steps, stepBuilder);
   }
 
   /**
@@ -129,8 +130,8 @@ export class GraphTraversal<S, E> implements Iterator<E> {
    */
   private getTarget(): Iterator<Traverser<E>> {
     if (this.target === null) {
-      let target: Iterator<Traverser<any>> = this.start;
-      this.steps.forEach((step: Step<any, any>) => {
+      let target: Iterator<Traverser<unknown>> = this.start;
+      this.steps.forEach((step: Step<unknown, unknown>) => {
         step.addStart(target);
         target = step;
       });
@@ -147,71 +148,72 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   //   arg2?: string | Predicate<Values> | unknown,
   //   arg3?: unknown,
   // ): GraphTraversal<S, Vertex | Edge | Values> {
-  //   return this.addStep(new HasStep(this, arg1, arg2, arg3));
+  //   returnthis.addStep(() => {new HasStep(this, arg1, arg2, arg3));
   // }
   public hasId(...keys: Array<EdgeKey> | Array<NodeKey>): GraphTraversal<S, Vertex | Edge> {
-    return this.addStep(new HasIdStep(this, keys));
+    return this.addStep((gt: GraphTraversal<S, Vertex | Edge>) => new HasIdStep(gt, keys));
   }
   public hasKey(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Values> {
-    return this.addStep(new HasKeyStep(this, keys));
+    return this.addStep((gt: GraphTraversal<S, Edge | Vertex | Values>) => new HasKeyStep(gt, keys));
   }
   public hasLabel(...labels: Array<string>): GraphTraversal<S, Vertex | Edge> {
-    return this.addStep(new HasLabelStep(this, labels));
+    return this.addStep((gt: GraphTraversal<S, Vertex | Edge>) => new HasLabelStep(gt, labels));
   }
   public hasNot(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Values> {
-    return this.addStep(new HasNotStep(this, keys));
+    return this.addStep((gt: GraphTraversal<S, Vertex | Edge | Values>) => new HasNotStep(gt, keys));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ Map steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   public properties(...properties: Array<string>): GraphTraversal<S, Values> {
-    return this.addStep(new PropertiesStep(this, properties));
+    return this.addStep((gt: GraphTraversal<S, Values>) => new PropertiesStep(gt, properties));
   }
   public identity(): GraphTraversal<S, NodeKey | EdgeKey> {
-    return this.addStep(new IdentityStep(this));
+    return this.addStep((gt: GraphTraversal<S, NodeKey | EdgeKey>) => new IdentityStep(gt));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ Map reducing barrier steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   public count(): GraphTraversal<S, number> {
-    return this.addStep(new CountStep(this));
+    return this.addStep((gt: GraphTraversal<S, number>) => new CountStep(gt));
   }
   public fold(): GraphTraversal<S, Array<E>> {
-    return this.addStep(new FoldStep<E>(this));
+    return this.addStep((gt: GraphTraversal<S, Array<E>>) => new FoldStep<E>(gt));
   }
+
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ FlatMap steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   public otherV(): GraphTraversal<S, Vertex> {
-    return this.addStep(new OtherVStep(this));
+    return this.addStep((gt: GraphTraversal<S, Vertex>) => new OtherVStep(gt));
   }
   public both(...labels: Array<string>): GraphTraversal<S, Vertex> {
-    return this.addStep(new BothStep(this, labels));
+    return this.addStep((gt: GraphTraversal<S, Vertex>) => new BothStep(gt, labels));
   }
   public bothE(...labels: Array<string>): GraphTraversal<S, Edge> {
-    return this.addStep(new BothEStep(this, labels));
+    return this.addStep((gt: GraphTraversal<S, Edge>) => new BothEStep(gt, labels));
   }
   public bothV(): GraphTraversal<S, Vertex> {
-    return this.addStep(new BothVStep(this));
+    return this.addStep((gt: GraphTraversal<S, Vertex>) => new BothVStep(gt));
   }
   public in(...labels: Array<string>): GraphTraversal<S, Vertex> {
-    return this.addStep(new InStep(this, labels));
+    return this.addStep((gt: GraphTraversal<S, Vertex>) => new InStep(gt, labels));
   }
   public inE(...labels: Array<string>): GraphTraversal<S, Edge> {
-    return this.addStep(new InEStep(this, labels));
+    return this.addStep((gt: GraphTraversal<S, Edge>) => new InEStep(gt, labels));
   }
   public inV(): GraphTraversal<S, Vertex> {
-    return this.addStep(new InVStep(this));
+    return this.addStep((gt: GraphTraversal<S, Vertex>) => new InVStep(gt));
   }
   public out(...labels: Array<string>): GraphTraversal<S, Vertex> {
-    return this.addStep(new OutStep(this, labels));
+    return this.addStep((gt: GraphTraversal<S, Vertex>) => new OutStep(gt, labels));
   }
   public outE(...labels: Array<string>): GraphTraversal<S, Edge> {
-    return this.addStep(new OutEStep(this, labels));
+    return this.addStep((gt: GraphTraversal<S, Edge>) => new OutEStep(gt, labels));
   }
   public outV(): GraphTraversal<S, Vertex> {
-    return this.addStep(new OutVStep(this));
+    return this.addStep((gt: GraphTraversal<S, Vertex>) => new OutVStep(gt));
   }
 }

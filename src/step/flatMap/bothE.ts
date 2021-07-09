@@ -8,7 +8,7 @@ import { FlatMapStep } from "./generic";
  * @see https://tinkerpop.apache.org/docs/current/reference/#vertex-steps
  */
 export class BothEStep extends FlatMapStep<Vertex, Edge> {
-  constructor(traversal: GraphTraversal<any, any>, labels: Array<string>) {
+  constructor(traversal: GraphTraversal<unknown, Edge>, labels: Array<string>) {
     super(
       "bothE",
       traversal,

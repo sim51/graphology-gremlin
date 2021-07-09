@@ -8,7 +8,7 @@ import { FilterStep } from "./generic";
  * https://tinkerpop.apache.org/docs/current/reference/#has-step
  */
 export class HasIdStep extends FilterStep<Edge | Vertex> {
-  constructor(traversal: GraphTraversal<any, any>, keys: Array<EdgeKey> | Array<NodeKey>) {
+  constructor(traversal: GraphTraversal<unknown, Edge | Vertex>, keys: Array<EdgeKey> | Array<NodeKey>) {
     super("hasId", traversal, (traverser: Traverser<Edge | Vertex>): boolean => {
       return keys.includes(traverser.value.id);
     });

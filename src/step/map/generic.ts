@@ -12,7 +12,7 @@ export class MapStep<S, T> extends Step<S, T> {
   /**
    * Default constructor.
    */
-  constructor(label: string, traversal: GraphTraversal<S, T>, fn: (source: Traverser<S>) => T) {
+  constructor(label: string, traversal: GraphTraversal<unknown, T>, fn: (source: Traverser<S>) => T) {
     super(traversal);
     this.label = label;
     this.fn = fn;

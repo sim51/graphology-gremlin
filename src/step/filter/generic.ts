@@ -17,7 +17,7 @@ export class FilterStep<S> extends Step<S, S> {
    * @param traversal GraphTraversal on which the step is applied
    * @param fn The filter function, if value is <code>TRUE</code> the traversal result is kept otherwise it is dismissed
    */
-  constructor(label: string, traversal: GraphTraversal<S, S>, fn: (source: Traverser<S>) => boolean) {
+  constructor(label: string, traversal: GraphTraversal<unknown, S>, fn: (source: Traverser<S>) => boolean) {
     super(traversal);
     this.label = label;
     this.fn = fn;

@@ -6,7 +6,7 @@ import { ReducingBarrierStep } from "./generic";
  * @see https://tinkerpop.apache.org/docs/current/reference/#fold-step
  */
 export class FoldStep<T> extends ReducingBarrierStep<T, Array<T>> {
-  constructor(traversal: GraphTraversal<any, any>) {
+  constructor(traversal: GraphTraversal<unknown, Array<T>>) {
     super("fold", traversal, new Array<T>(), (previousValue: Array<T>, value: T) => {
       previousValue.push(value);
       return previousValue;

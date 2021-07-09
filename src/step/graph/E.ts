@@ -11,7 +11,7 @@ export class EStep extends MapStep<EdgeKey, Edge> {
   /**
    * Default constructor.
    */
-  constructor(traversal: GraphTraversal<any, any>) {
+  constructor(traversal: GraphTraversal<unknown, Edge>) {
     super(
       "E",
       traversal,

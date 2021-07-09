@@ -17,7 +17,7 @@ export class ReducingBarrierStep<S, T> extends Step<S, T> {
    */
   constructor(
     label: string,
-    traversal: GraphTraversal<S, T>,
+    traversal: GraphTraversal<unknown, T>,
     initValue: T,
     reducer: (previousValue: T, value: S, index?: number) => T,
   ) {

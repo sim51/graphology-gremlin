@@ -8,7 +8,7 @@ import { MapStep } from "./generic";
  * @see https://tinkerpop.apache.org/docs/current/reference/#identity-step
  */
 export class IdentityStep extends MapStep<Edge | Vertex, NodeKey | EdgeKey> {
-  constructor(traversal: GraphTraversal<any, any>) {
+  constructor(traversal: GraphTraversal<unknown, NodeKey | EdgeKey>) {
     super("identity", traversal, (traverser: Traverser<Edge | Vertex>): NodeKey | EdgeKey => {
       return traverser.value.id;
     });
