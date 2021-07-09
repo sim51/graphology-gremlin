@@ -1,7 +1,7 @@
 import Graph from "graphology";
 import { EdgeKey, NodeKey } from "graphology-types";
 import { Step } from "../step/generic";
-import { GraphConfiguration, Traverser, Vertex, Edge, Object } from "../type";
+import { GraphConfiguration, Traverser, Vertex, Edge, Values } from "../type";
 // import { Predicate } from "./predicate";
 
 // Filter steps
@@ -144,28 +144,28 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // public has(
   //   arg1: string,
-  //   arg2?: string | Predicate<Object> | unknown,
+  //   arg2?: string | Predicate<Values> | unknown,
   //   arg3?: unknown,
-  // ): GraphTraversal<S, Vertex | Edge | Object> {
+  // ): GraphTraversal<S, Vertex | Edge | Values> {
   //   return this.addStep(new HasStep(this, arg1, arg2, arg3));
   // }
   public hasId(...keys: Array<EdgeKey> | Array<NodeKey>): GraphTraversal<S, Vertex | Edge> {
     return this.addStep(new HasIdStep(this, keys));
   }
-  public hasKey(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Object> {
+  public hasKey(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Values> {
     return this.addStep(new HasKeyStep(this, keys));
   }
   public hasLabel(...labels: Array<string>): GraphTraversal<S, Vertex | Edge> {
     return this.addStep(new HasLabelStep(this, labels));
   }
-  public hasNot(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Object> {
+  public hasNot(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Values> {
     return this.addStep(new HasNotStep(this, keys));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ Map steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  public properties(...properties: Array<string>): GraphTraversal<S, Object> {
+  public properties(...properties: Array<string>): GraphTraversal<S, Values> {
     return this.addStep(new PropertiesStep(this, properties));
   }
   public identity(): GraphTraversal<S, NodeKey | EdgeKey> {

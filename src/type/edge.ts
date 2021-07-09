@@ -1,14 +1,14 @@
 import { EdgeKey } from "graphology-types";
-import { Object } from "./common";
+import { Values } from "./common";
 // Lazy ?
 // Give the graph internally + some config for the edge type ?
 // What to do for creation ?
 export class Edge {
   id: EdgeKey;
   type: string;
-  properties: Object;
+  properties: Values;
 
-  constructor(id: EdgeKey, type = "", properties: Object = {}) {
+  constructor(id: EdgeKey, type = "", properties: Values = {}) {
     this.id = id;
     this.type = type;
     this.properties = properties;

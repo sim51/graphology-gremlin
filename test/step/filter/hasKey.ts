@@ -1,6 +1,6 @@
 import assert from "assert";
 import { generateRandomGraph } from "../../utils";
-import { Vertex, Edge, Object } from "../../../src/type";
+import { Vertex, Edge, Values } from "../../../src/type";
 import { GraphTraversalSource } from "../../../src/index";
 
 const graph = generateRandomGraph();
@@ -112,7 +112,7 @@ describe("Step - Filter - hasKey", function() {
         .hasId(id)
         .properties()
         .hasKey("name")
-        .toList()[0] as Object;
+        .toList()[0] as Values;
 
       assert.deepEqual(result, graph.getNodeAttributes(id));
     });
@@ -125,7 +125,7 @@ describe("Step - Filter - hasKey", function() {
         .hasId(id)
         .properties()
         .hasKey("name", "email", "valid")
-        .toList()[0] as Object;
+        .toList()[0] as Values;
 
       assert.deepEqual(result, graph.getNodeAttributes(id));
     });

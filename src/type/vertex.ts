@@ -1,5 +1,5 @@
 import { NodeKey } from "graphology-types";
-import { Object } from "./common";
+import { Values } from "./common";
 
 // Lazy ?
 // Give the graph internally + some config for node labels ?
@@ -7,9 +7,9 @@ import { Object } from "./common";
 export class Vertex {
   id: NodeKey;
   labels: Array<string>;
-  properties: Object;
+  properties: Values;
 
-  constructor(id: NodeKey, labels: Array<string> = [], properties: Object = {}) {
+  constructor(id: NodeKey, labels: Array<string> = [], properties: Values = {}) {
     this.id = id;
     this.labels = labels;
     this.properties = properties;

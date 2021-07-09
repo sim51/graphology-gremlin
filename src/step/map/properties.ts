@@ -1,12 +1,12 @@
 import { pick } from "lodash";
-import { Edge, Vertex, Object, Traverser } from "../../type";
+import { Edge, Vertex, Values, Traverser } from "../../type";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { MapStep } from "./generic";
 
 /**
  * Return the properties of the traversal value.
  */
-export class PropertiesStep extends MapStep<Edge | Vertex | Object, Object> {
+export class PropertiesStep extends MapStep<Edge | Vertex | Values, Values> {
   /**
    * Default constructor.
    */
@@ -14,8 +14,8 @@ export class PropertiesStep extends MapStep<Edge | Vertex | Object, Object> {
     super(
       "properties",
       traversal,
-      (traverser: Traverser<Edge | Vertex | Object>): Object => {
-        const value: Object =
+      (traverser: Traverser<Edge | Vertex | Values>): Values => {
+        const value: Values =
           traverser.value instanceof Vertex || traverser.value instanceof Edge
             ? traverser.value.properties
             : traverser.value;

@@ -1,1 +1,1 @@
-export type Object = { [key: string]: unknown };
+export type Values = { [key: string]: unknown };

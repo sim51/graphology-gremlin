@@ -43,14 +43,9 @@ export class Traverser<S> {
   /**
    * Create a new traverser for the next iteration.
    */
-  makeNextTraverser<T>(label: string, value: T) {
+  makeNextTraverser<T>(label: string, value: T): Traverser<T> {
     const copyPath = this.path.slice();
     copyPath.push({ label, value });
     return new Traverser<T>(value, copyPath);
   }
-
-  // loops();
-  // bulk();
-  // sack();
-  // sideEffects(arg?: string);
 }
