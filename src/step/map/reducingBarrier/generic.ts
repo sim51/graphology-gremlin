@@ -9,7 +9,7 @@ import { Step } from "../../generic";
  */
 export class ReducingBarrierStep<S, T> extends Step<S, T> {
   label: string;
-  reducer: (previousValue: T, value: S, index?: number) => T;
+  reducer: (previousValue: T, value: S, index: number, array: Array<S>) => T;
   initValue: T;
 
   /**
@@ -19,7 +19,7 @@ export class ReducingBarrierStep<S, T> extends Step<S, T> {
     label: string,
     traversal: GraphTraversal<unknown, T>,
     initValue: T,
-    reducer: (previousValue: T, value: S, index?: number) => T,
+    reducer: (previousValue: T, value: S, index: number, array: Array<S>) => T,
   ) {
     super(traversal);
     this.label = label;

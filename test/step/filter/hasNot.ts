@@ -110,7 +110,7 @@ describe("Step - Filter - hasNot", function() {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
-        .properties()
+        .propertiesMap()
         .hasNot("name")
         .toList();
       assert.equal(result.length, 0);
@@ -120,7 +120,7 @@ describe("Step - Filter - hasNot", function() {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
-        .properties()
+        .propertiesMap()
         .hasNot("name", "email")
         .toList();
       assert.deepEqual(result.length, 0);
@@ -130,7 +130,7 @@ describe("Step - Filter - hasNot", function() {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
-        .properties()
+        .propertiesMap()
         .hasNot("azertyuiop", "name")
         .toList();
 
@@ -141,7 +141,7 @@ describe("Step - Filter - hasNot", function() {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
-        .properties()
+        .propertiesMap()
         .hasNot("azertyuiop")
         .toList();
 
@@ -152,7 +152,7 @@ describe("Step - Filter - hasNot", function() {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
-        .properties()
+        .propertiesMap()
         .hasNot("azertyuiop", "poiuytra")
         .toList();
 

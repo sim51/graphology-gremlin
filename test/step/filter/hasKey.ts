@@ -1,4 +1,5 @@
 import assert from "assert";
+import { omit } from "lodash";
 import { generateRandomGraph } from "../../utils";
 import { Vertex, Edge, Values } from "../../../src/type";
 import { GraphTraversalSource } from "../../../src/index";
@@ -15,26 +16,26 @@ describe("Step - Filter - hasKey", function() {
         .hasId(id)
         .hasKey("name")
         .toList()[0] as Vertex;
-      assert.deepEqual(result.properties, graph.getNodeAttributes(id));
+      assert.deepEqual(result.properties, omit(graph.getNodeAttributes(id), ["@labels"]));
     });
 
     it("with values should work", async () => {
       const g = new GraphTraversalSource(graph);
-      const nodeId = graph.nodes()[0];
+      const id = graph.nodes()[0];
       const result = g
         .V()
-        .hasId(nodeId)
+        .hasId(id)
         .hasKey("name", "email", "valid")
         .toList()[0] as Vertex;
-      assert.deepEqual(result.properties, graph.getNodeAttributes(nodeId));
+      assert.deepEqual(result.properties, omit(graph.getNodeAttributes(id), ["@labels"]));
     });
 
     it("with non-existing key should work", async () => {
       const g = new GraphTraversalSource(graph);
-      const nodeId = graph.nodes()[0];
+      const id = graph.nodes()[0];
       const result = g
         .V()
-        .hasId(nodeId)
+        .hasId(id)
         .hasKey("azertyuiop")
         .toList();
 
@@ -43,10 +44,10 @@ describe("Step - Filter - hasKey", function() {
 
     it("with values with non-existing key should work", async () => {
       const g = new GraphTraversalSource(graph);
-      const nodeId = graph.nodes()[0];
+      const id = graph.nodes()[0];
       const result = g
         .V()
-        .hasId(nodeId)
+        .hasId(id)
         .hasKey("name", "email", "valid", "azertyuiop")
         .toList();
 
@@ -64,7 +65,7 @@ describe("Step - Filter - hasKey", function() {
         .hasKey("weight")
         .toList()[0] as Edge;
 
-      assert.deepEqual(result.properties, graph.getEdgeAttributes(id));
+      assert.deepEqual(result.properties, omit(graph.getEdgeAttributes(id), ["@type"]));
     });
 
     it("with values should work", async () => {
@@ -75,7 +76,7 @@ describe("Step - Filter - hasKey", function() {
         .hasId(id)
         .hasKey("weight", "timestamp")
         .toList()[0] as Edge;
-      assert.deepEqual(result.properties, graph.getEdgeAttributes(id));
+      assert.deepEqual(result.properties, omit(graph.getEdgeAttributes(id), ["@type"]));
     });
 
     it("with non-existing key should work", async () => {
@@ -110,11 +111,11 @@ describe("Step - Filter - hasKey", function() {
       const result = g
         .V()
         .hasId(id)
-        .properties()
+        .propertiesMap()
         .hasKey("name")
         .toList()[0] as Values;
 
-      assert.deepEqual(result, graph.getNodeAttributes(id));
+      assert.deepEqual(result, omit(graph.getNodeAttributes(id), ["@labels"]));
     });
 
     it("with values should work", async () => {
@@ -123,11 +124,11 @@ describe("Step - Filter - hasKey", function() {
       const result = g
         .V()
         .hasId(id)
-        .properties()
+        .propertiesMap()
         .hasKey("name", "email", "valid")
         .toList()[0] as Values;
 
-      assert.deepEqual(result, graph.getNodeAttributes(id));
+      assert.deepEqual(result, omit(graph.getNodeAttributes(id), ["@labels"]));
     });
 
     it("with non-existing key should work", async () => {
@@ -136,7 +137,7 @@ describe("Step - Filter - hasKey", function() {
       const result = g
         .V()
         .hasId(id)
-        .properties()
+        .propertiesMap()
         .hasKey("azertyuiop")
         .toList();
 

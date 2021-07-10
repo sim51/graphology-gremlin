@@ -1,3 +1,4 @@
+import { omit } from "lodash";
 import { EdgeKey } from "graphology-types";
 import { Edge, Traverser } from "../../type";
 import { GraphTraversal } from "../../traversal/graphTraversal";
@@ -18,7 +19,11 @@ export class EStep extends MapStep<EdgeKey, Edge> {
       (traverser: Traverser<EdgeKey>): Edge => {
         const id = traverser.value;
         const props = traversal.getGraph().getEdgeAttributes(id);
-        return new Edge(id, props[traversal.getConfig().edge_label_field], props);
+        return new Edge(
+          id,
+          props[traversal.getConfig().edge_label_field],
+          omit(props, [traversal.getConfig().edge_label_field]),
+        );
       },
     );
   }

@@ -1,3 +1,4 @@
+import { omit } from "lodash";
 import { EdgeKey } from "graphology-types";
 import { Edge, Vertex, Traverser } from "../../type";
 import { GraphTraversal } from "../../traversal/graphTraversal";
@@ -26,7 +27,11 @@ export class BothStep extends FlatMapStep<Vertex, Vertex> {
           .map((edge: Edge) => {
             const nodeKey = graph.opposite(source.id, edge.id);
             const props = graph.getNodeAttributes(nodeKey);
-            return new Vertex(nodeKey, props[config.vertex_label_field] || [], props);
+            return new Vertex(
+              nodeKey,
+              props[config.vertex_label_field] || [],
+              omit(props, [config.vertex_label_field]),
+            );
           })
           [Symbol.iterator]();
       },

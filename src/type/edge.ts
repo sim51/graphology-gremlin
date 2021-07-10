@@ -1,8 +1,9 @@
+import { pick } from "lodash";
 import { EdgeKey } from "graphology-types";
 import { Values } from "./common";
-// Lazy ?
-// Give the graph internally + some config for the edge type ?
-// What to do for creation ?
+
+export type EdgeMap = { id: EdgeKey; label: string } & Values;
+
 export class Edge {
   id: EdgeKey;
   type: string;
@@ -12,5 +13,10 @@ export class Edge {
     this.id = id;
     this.type = type;
     this.properties = properties;
+  }
+
+  toMap(properties: Array<string> = []): EdgeMap {
+    if (properties.length > 0) return { ...pick(this.properties, properties), id: this.id, label: this.type };
+    else return { ...this.properties, id: this.id, label: this.type };
   }
 }

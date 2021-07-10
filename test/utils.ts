@@ -15,9 +15,9 @@ export function generateRandomGraph(): Graph {
   graph.nodes().forEach((nodeKey: NodeKey) => {
     graph.mergeNodeAttributes(nodeKey, {
       "@labels": ["Person", randomValue(NODE_LABELS)],
-      name: faker.name.findName(),
-      email: faker.internet.email(),
       age: faker.datatype.number(),
+      email: faker.internet.email(),
+      name: faker.name.findName(),
       valid: faker.datatype.boolean(),
     });
   });

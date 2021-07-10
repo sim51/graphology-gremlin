@@ -3,10 +3,10 @@ import { NodeKey, EdgeKey } from "graphology-types";
 import { Traverser, Vertex, Edge, GraphConfiguration, DEFAULT_GRAPH_CONFIGURATION } from "../type";
 import { GraphTraversal } from "./graphTraversal";
 // start steps
-import { AddEStep } from "../step/graph/addE";
-import { AddVStep } from "../step/graph/addV";
-import { EStep } from "../step/graph/E";
-import { VStep } from "../step/graph/V";
+import { AddEStep } from "../step/start/addE";
+import { AddVStep } from "../step/start/addV";
+import { EStep } from "../step/start/E";
+import { VStep } from "../step/start/V";
 
 /**
  * Extract of https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/TraversalSource.java
