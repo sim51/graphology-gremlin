@@ -20,7 +20,7 @@
     "lint": "esw . --ext .ts",
     "compile": "tsc",
     "build": "npm run clean && npm run lint && npm run compile && webpack --progress",
-    "test": "mocha --require ts-node/register ./test/**/*.ts"
+    "test": "nyc --reporter=html --reporter=text mocha --exit -r ts-node/register ./test/**/*.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",
@@ -37,6 +37,7 @@
     "graphology-layout": "^0.4.0",
     "graphology-types": "^0.19.2",
     "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "terser-webpack-plugin": "^5.1.1",
     "ts-loader": "^9.1.0",
