@@ -21,6 +21,7 @@ import { OutEStep } from "../step/flatMap/outE";
 import { OutVStep } from "../step/flatMap/outV";
 import { OtherVStep } from "../step/flatMap/otherV";
 import { PropertiesStep } from "../step/flatMap/properties";
+import { UnfoldStep } from "../step/flatMap/unfold";
 import { ValuesStep } from "../step/flatMap/values";
 
 // Map steps
@@ -197,6 +198,9 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public properties(...properties: Array<string>): GraphTraversal<S, [string, unknown]> {
     return this.addStep((gt: GraphTraversal<S, [string, unknown]>) => new PropertiesStep(gt, properties));
+  }
+  public unfold(): GraphTraversal<S, unknown> {
+    return this.addStep((gt: GraphTraversal<S, unknown>) => new UnfoldStep(gt));
   }
   public values(...properties: Array<string>): GraphTraversal<S, unknown> {
     return this.addStep((gt: GraphTraversal<S, unknown>) => new ValuesStep(gt, properties));
