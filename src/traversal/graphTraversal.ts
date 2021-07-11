@@ -40,6 +40,8 @@ import { MeanStep } from "../step/map/reducingBarrier/mean";
 import { MinStep } from "../step/map/reducingBarrier/min";
 import { SumStep } from "../step/map/reducingBarrier/sum";
 
+// Side effect steps
+import { InjectStep } from "../step/sideEffect/inject";
 /**
  * Extract from https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/Traversal.java
  *
@@ -257,5 +259,12 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public sum(): GraphTraversal<S, number> {
     return this.addStep((gt: GraphTraversal<S, number>) => new SumStep(gt));
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~ Side effect steps
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  public inject(...items: Array<E>): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new InjectStep(gt, items));
   }
 }

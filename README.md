@@ -19,9 +19,7 @@ g
 - Omit config field when creating Edge / Vertex
   => static function with config, id, props
 
-* predicate + has filter step
+* has filter step
 * step scope (ex count)
-* where clauses
-* inject
-* all side effect
-* all branch
+* predicate + where clauses
+* branch
