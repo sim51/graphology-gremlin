@@ -6,7 +6,7 @@ const graph = generateRandomGraph();
 
 describe("Step - Filter - hasLabel", function() {
   describe("Vertex", function() {
-    it("with one value should work", async () => {
+    it("with one value should work", () => {
       const g = new GraphTraversalSource(graph);
       const nbPerson = g
         .V()
@@ -29,7 +29,7 @@ describe("Step - Filter - hasLabel", function() {
       assert.equal(nbMan + nbWoman + nbOther, 100);
     });
 
-    it("with multiple value should work", async () => {
+    it("with multiple value should work", () => {
       const g = new GraphTraversalSource(graph);
       const nbPerson = g
         .V()
@@ -38,7 +38,7 @@ describe("Step - Filter - hasLabel", function() {
       assert.equal(nbPerson, 100);
     });
 
-    it("without value should returns 0 result", async () => {
+    it("without value should returns 0 result", () => {
       const g = new GraphTraversalSource(graph);
       assert.equal(
         g
@@ -50,7 +50,7 @@ describe("Step - Filter - hasLabel", function() {
     });
   });
   describe("Edge", function() {
-    it("with one value should work", async () => {
+    it("with one value should work", () => {
       const g = new GraphTraversalSource(graph);
       const nbKnow = g
         .E()
@@ -68,7 +68,7 @@ describe("Step - Filter - hasLabel", function() {
       assert.equal(nbKnow + nbFriend + nbColleague, graph.size);
     });
 
-    it("with multiple values should work", async () => {
+    it("with multiple values should work", () => {
       const g = new GraphTraversalSource(graph);
       const nbEdges = g
         .E()
@@ -77,7 +77,7 @@ describe("Step - Filter - hasLabel", function() {
       assert.equal(nbEdges, graph.size);
     });
 
-    it("without value should returns 0 result", async () => {
+    it("without value should returns 0 result", () => {
       const g = new GraphTraversalSource(graph);
       assert.equal(
         g

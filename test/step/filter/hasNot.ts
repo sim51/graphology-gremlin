@@ -6,7 +6,7 @@ const graph = generateRandomGraph();
 
 describe("Step - Filter - hasNot", function() {
   describe("Vertex", function() {
-    it("should work", async () => {
+    it("should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -15,7 +15,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, 0);
     });
 
-    it("with values should work", async () => {
+    it("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -24,7 +24,7 @@ describe("Step - Filter - hasNot", function() {
       assert.deepEqual(result.length, 0);
     });
 
-    it("with values and one existing key should work", async () => {
+    it("with values and one existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -34,7 +34,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, 0);
     });
 
-    it("with non-existing key should work", async () => {
+    it("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -44,7 +44,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, graph.order);
     });
 
-    it("with multiple non-existing key should work", async () => {
+    it("with multiple non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -56,7 +56,7 @@ describe("Step - Filter - hasNot", function() {
   });
 
   describe("Edge", function() {
-    it("should work", async () => {
+    it("should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .E()
@@ -65,7 +65,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, 0);
     });
 
-    it("with values should work", async () => {
+    it("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .E()
@@ -74,7 +74,7 @@ describe("Step - Filter - hasNot", function() {
       assert.deepEqual(result.length, 0);
     });
 
-    it("with values and one existing key should work", async () => {
+    it("with values and one existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .E()
@@ -84,7 +84,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, 0);
     });
 
-    it("with non-existing key should work", async () => {
+    it("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .E()
@@ -94,7 +94,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, graph.size);
     });
 
-    it("with multiple non-existing key should work", async () => {
+    it("with multiple non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .E()
@@ -106,7 +106,7 @@ describe("Step - Filter - hasNot", function() {
   });
 
   describe("Object", function() {
-    it("should work", async () => {
+    it("should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -116,7 +116,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, 0);
     });
 
-    it("with values should work", async () => {
+    it("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -126,7 +126,7 @@ describe("Step - Filter - hasNot", function() {
       assert.deepEqual(result.length, 0);
     });
 
-    it("with values and one existing key should work", async () => {
+    it("with values and one existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -137,7 +137,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, 0);
     });
 
-    it("with non-existing key should work", async () => {
+    it("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -148,7 +148,7 @@ describe("Step - Filter - hasNot", function() {
       assert.equal(result.length, graph.order);
     });
 
-    it("with multiple non-existing key should work", async () => {
+    it("with multiple non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()

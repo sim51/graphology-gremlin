@@ -5,7 +5,7 @@ import { GraphTraversalSource } from "../../../src/index";
 const graph = generateRandomGraph();
 
 describe("Step - FlatMap - inV", function() {
-  it("should work", async () => {
+  it("should work", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()

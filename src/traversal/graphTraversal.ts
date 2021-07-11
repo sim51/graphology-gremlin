@@ -4,10 +4,13 @@ import { Step } from "../step/generic";
 import { GraphConfiguration, Traverser, Vertex, VertexMap, Edge, EdgeMap, Values } from "../type";
 
 // Filter steps
+import { DedupStep } from "../step/filter/dedup";
 import { HasIdStep } from "../step/filter/hasId";
 import { HasKeyStep } from "../step/filter/hasKey";
 import { HasLabelStep } from "../step/filter/hasLabel";
 import { HasNotStep } from "../step/filter/hasNot";
+import { RangeStep } from "../step/filter/range";
+import { TailStep } from "../step/filter/tail";
 
 // FlatMap steps
 import { BothStep } from "../step/flatMap/both";
@@ -150,6 +153,9 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~ Filter steps
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  public dedup(): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new DedupStep<E>(gt));
+  }
   public hasId(...keys: Array<EdgeKey> | Array<NodeKey>): GraphTraversal<S, Vertex | Edge> {
     return this.addStep((gt: GraphTraversal<S, Vertex | Edge>) => new HasIdStep(gt, keys));
   }
@@ -161,6 +167,15 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public hasNot(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Values> {
     return this.addStep((gt: GraphTraversal<S, Vertex | Edge | Values>) => new HasNotStep(gt, keys));
+  }
+  public range(start: number, end: number): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new RangeStep<E>(gt, start, end));
+  }
+  public limit(end: number): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new RangeStep<E>(gt, 0, end));
+  }
+  public tail(nb = 1): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new TailStep<E>(gt, nb));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -7,7 +7,7 @@ import { Vertex, Edge } from "../../../src/type";
 const graph = generateRandomGraph();
 
 describe("Step - Map - elementMap", function() {
-  it("should work on Vertex", async () => {
+  it("should work on Vertex", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()
@@ -22,7 +22,7 @@ describe("Step - Map - elementMap", function() {
     assert.deepEqual(result[0], element.toMap());
   });
 
-  it("should work on Edge", async () => {
+  it("should work on Edge", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .E()

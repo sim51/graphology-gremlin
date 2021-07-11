@@ -7,7 +7,7 @@ const graph = generateRandomGraph();
 
 describe("Step - FlatMap - values", function() {
   describe("Vertex", function() {
-    it("should work", async () => {
+    it("should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
       const attrs = graph.getNodeAttributes(id);
@@ -19,7 +19,7 @@ describe("Step - FlatMap - values", function() {
       assert.deepEqual(result.sort(), valuesIn(omit(attrs, ["@labels"])).sort());
     });
 
-    it("with values should work", async () => {
+    it("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
       const attrs = graph.getNodeAttributes(id);
@@ -31,7 +31,7 @@ describe("Step - FlatMap - values", function() {
       assert.deepEqual(result.sort(), valuesIn(pick(attrs, ["email", "name"])).sort());
     });
 
-    it("with non-existing key should work", async () => {
+    it("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
       const result = g
@@ -44,7 +44,7 @@ describe("Step - FlatMap - values", function() {
   });
 
   describe("Edge", function() {
-    it("should work", async () => {
+    it("should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.edges()[0];
       const attrs = graph.getEdgeAttributes(id);
@@ -56,7 +56,7 @@ describe("Step - FlatMap - values", function() {
       assert.deepEqual(result.sort(), valuesIn(omit(attrs, ["@type"])).sort());
     });
 
-    it("with values should work", async () => {
+    it("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.edges()[0];
       const attrs = graph.getEdgeAttributes(id);
@@ -68,7 +68,7 @@ describe("Step - FlatMap - values", function() {
       assert.deepEqual(result.sort(), valuesIn(pick(attrs, ["timestamp"])).sort());
     });
 
-    it("with non-existing key should work", async () => {
+    it("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.edges()[0];
       const result = g
@@ -81,7 +81,7 @@ describe("Step - FlatMap - values", function() {
   });
 
   describe("Object", function() {
-    it("should work", async () => {
+    it("should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
       const attrs = graph.getNodeAttributes(id);
@@ -94,7 +94,7 @@ describe("Step - FlatMap - values", function() {
       assert.deepEqual(result.sort(), valuesIn(omit(attrs, ["@labels"])).sort());
     });
 
-    it("with values should work", async () => {
+    it("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
       const attrs = graph.getNodeAttributes(id);
@@ -107,7 +107,7 @@ describe("Step - FlatMap - values", function() {
       assert.deepEqual(result.sort(), valuesIn(pick(attrs, ["email", "name"])).sort());
     });
 
-    it("with non-existing key should work", async () => {
+    it("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
       const result = g

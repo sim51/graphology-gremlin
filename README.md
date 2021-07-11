@@ -20,7 +20,7 @@ g
   => static function with config, id, props
 
 * predicate + has filter step
-
+* step scope (ex count)
 * where clauses
 * inject
 * all side effect

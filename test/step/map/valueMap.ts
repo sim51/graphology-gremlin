@@ -6,7 +6,7 @@ import { GraphTraversalSource } from "../../../src/index";
 const graph = generateRandomGraph();
 
 describe("Step - Map - valueMap", function() {
-  it("should work on valueMap", async () => {
+  it("should work on valueMap", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()
@@ -18,7 +18,7 @@ describe("Step - Map - valueMap", function() {
     assert.deepEqual(result[0], omit(graph.getNodeAttributes(graph.nodes()[0]), ["@labels"]));
   });
 
-  it("should work on Vertex", async () => {
+  it("should work on Vertex", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()
@@ -29,7 +29,7 @@ describe("Step - Map - valueMap", function() {
     assert.deepEqual(result[0], omit(graph.getNodeAttributes(graph.nodes()[0]), ["@labels"]));
   });
 
-  it("should work on Edge", async () => {
+  it("should work on Edge", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .E()

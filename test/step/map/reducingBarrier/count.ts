@@ -5,7 +5,7 @@ import { GraphTraversalSource } from "../../../../src/index";
 const graph = generateRandomGraph();
 
 describe("Step - Map - reducingBarrier - count", function() {
-  it("should work on count", async () => {
+  it("should work on count", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(
       g
@@ -17,7 +17,7 @@ describe("Step - Map - reducingBarrier - count", function() {
     );
   });
 
-  it("should work on vertex", async () => {
+  it("should work on vertex", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(
       g
@@ -28,7 +28,7 @@ describe("Step - Map - reducingBarrier - count", function() {
     );
   });
 
-  it("should work on edge", async () => {
+  it("should work on edge", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(
       g
@@ -39,7 +39,7 @@ describe("Step - Map - reducingBarrier - count", function() {
     );
   });
 
-  it("should work on identifier", async () => {
+  it("should work on identifier", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(
       g

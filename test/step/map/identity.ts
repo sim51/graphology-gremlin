@@ -6,7 +6,7 @@ const graph = generateRandomGraph();
 
 describe("Step - Map - identity", function() {
   describe("Vertex", function() {
-    it("should work", async () => {
+    it("should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -18,7 +18,7 @@ describe("Step - Map - identity", function() {
   });
 
   describe("Edge", function() {
-    it("should work", async () => {
+    it("should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .E()

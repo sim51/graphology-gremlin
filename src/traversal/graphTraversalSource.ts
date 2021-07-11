@@ -7,6 +7,7 @@ import { AddEStep } from "../step/start/addE";
 import { AddVStep } from "../step/start/addV";
 import { EStep } from "../step/start/E";
 import { VStep } from "../step/start/V";
+import { InjectStep } from "../step/sideEffect/inject";
 
 /**
  * Extract of https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/TraversalSource.java
@@ -48,7 +49,7 @@ export class GraphTraversalSource {
   /**
    * List all vertex of the graph or a selection.
    */
-  public V(...ids: Array<NodeKey>): GraphTraversal<NodeKey, Vertex> {
+  V(...ids: Array<NodeKey>): GraphTraversal<NodeKey, Vertex> {
     const nodes = (ids.length > 0 ? ids : this.graph.nodes()).map((id: NodeKey) => new Traverser(id));
     return new GraphTraversal<NodeKey, Vertex>(
       this.graph,
@@ -62,11 +63,11 @@ export class GraphTraversalSource {
   /**
    * Create a new vertex.
    */
-  public addV(): GraphTraversal<null | string, Vertex> {
+  addV(): GraphTraversal<null | string, Vertex> {
     return new GraphTraversal<null | string, Vertex>(
       this.graph,
       this.config,
-      this.emptyIterator(),
+      this.emptyIterator(true),
       [],
       (gt: GraphTraversal<null | string, Vertex>) => new AddVStep(gt),
     );
@@ -75,7 +76,7 @@ export class GraphTraversalSource {
   /**
    * List all edges of the graph or a selection.
    */
-  public E(...ids: Array<EdgeKey>): GraphTraversal<EdgeKey, Edge> {
+  E(...ids: Array<EdgeKey>): GraphTraversal<EdgeKey, Edge> {
     const edges = (ids.length > 0 ? ids : this.graph.edges()).map((id: EdgeKey) => new Traverser(id));
     return new GraphTraversal<EdgeKey, Edge>(
       this.graph,
@@ -89,17 +90,27 @@ export class GraphTraversalSource {
   /**
    * Create a new edge.
    */
-  public addE(): GraphTraversal<null | string, Edge> {
+  addE(): GraphTraversal<null | string, Edge> {
     return new GraphTraversal<null | string, Edge>(
       this.graph,
       this.config,
-      this.emptyIterator(),
+      this.emptyIterator(true),
       [],
       (gt: GraphTraversal<null | string, Edge>) => new AddEStep(gt),
     );
   }
 
-  private emptyIterator(): Iterator<Traverser<null>> {
-    return [new Traverser(null)][Symbol.iterator]();
+  inject<T>(...items: Array<T>): GraphTraversal<null, T> {
+    return new GraphTraversal<null, T>(
+      this.graph,
+      this.config,
+      this.emptyIterator(),
+      [],
+      (gt: GraphTraversal<null, T>) => new InjectStep<T>(gt, items),
+    );
+  }
+
+  private emptyIterator(withOneNummTraverser = false): Iterator<Traverser<null>> {
+    return (withOneNummTraverser ? [new Traverser(null)] : [])[Symbol.iterator]();
   }
 }

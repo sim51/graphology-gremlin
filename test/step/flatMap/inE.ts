@@ -5,7 +5,7 @@ import { GraphTraversalSource } from "../../../src/index";
 const graph = generateRandomGraph();
 
 describe("Step - FlatMap - inE", function() {
-  it("without value should work", async () => {
+  it("without value should work", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()
@@ -13,7 +13,7 @@ describe("Step - FlatMap - inE", function() {
       .toList();
     assert.equal(result.length, graph.size);
   });
-  it("with one value should work", async () => {
+  it("with one value should work", () => {
     const g = new GraphTraversalSource(graph);
     const result1 = g
       .V()
@@ -30,7 +30,7 @@ describe("Step - FlatMap - inE", function() {
     assert.equal(result1.length + result2.length + result3.length, graph.size);
   });
 
-  it("with values should work", async () => {
+  it("with values should work", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()

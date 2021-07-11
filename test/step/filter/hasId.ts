@@ -6,7 +6,7 @@ const graph = generateRandomGraph();
 
 describe("Step - Filter - hasId", function() {
   describe("Vertex", function() {
-    it("with one value should work", async () => {
+    it("with one value should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -16,7 +16,7 @@ describe("Step - Filter - hasId", function() {
       assert.equal(result[0].id, "10");
     });
 
-    it("with multiple values should work", async () => {
+    it("with multiple values should work", () => {
       const g = new GraphTraversalSource(graph);
       const result = g
         .V()
@@ -25,7 +25,7 @@ describe("Step - Filter - hasId", function() {
       assert.equal(result, 3);
     });
 
-    it("without value should returns 0 result", async () => {
+    it("without value should returns 0 result", () => {
       const g = new GraphTraversalSource(graph);
       assert.equal(
         g
@@ -38,7 +38,7 @@ describe("Step - Filter - hasId", function() {
   });
 
   describe("Edge", function() {
-    it("with one value should work", async () => {
+    it("with one value should work", () => {
       const g = new GraphTraversalSource(graph);
       assert.equal(
         g
@@ -49,7 +49,7 @@ describe("Step - Filter - hasId", function() {
       );
     });
 
-    it("with multiple values should work", async () => {
+    it("with multiple values should work", () => {
       const g = new GraphTraversalSource(graph);
       assert.equal(
         g
@@ -60,7 +60,7 @@ describe("Step - Filter - hasId", function() {
       );
     });
 
-    it("without value should returns 0 result", async () => {
+    it("without value should returns 0 result", () => {
       const g = new GraphTraversalSource(graph);
       assert.equal(
         g

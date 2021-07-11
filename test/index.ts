@@ -5,17 +5,17 @@ import { GraphTraversalSource } from "../src/index";
 const graph = generateRandomGraph();
 
 describe("Testing Gremlin", function() {
-  it("get all nodes should work", async () => {
+  it("get all nodes should work", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(g.V().toList().length, graph.order);
   });
 
-  it("get all edges should work", async () => {
+  it("get all edges should work", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(g.E().toList().length, graph.size);
   });
 
-  it("filter node by label should work", async () => {
+  it("filter node by label should work", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()
@@ -26,7 +26,7 @@ describe("Testing Gremlin", function() {
     assert.equal(result.length <= graph.order, true);
   });
 
-  it("out should work", async () => {
+  it("out should work", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(
       g
@@ -37,7 +37,7 @@ describe("Testing Gremlin", function() {
     );
   });
 
-  it("out with type should work", async () => {
+  it("out with type should work", () => {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()
@@ -45,5 +45,11 @@ describe("Testing Gremlin", function() {
       .toList();
     assert.equal(result.length > 0, true);
     assert.equal(result.length <= graph.size, true);
+  });
+
+  it("start with inject should work", () => {
+    const g = new GraphTraversalSource(graph);
+    const result = g.inject<number>(1, 2, 3, 4, 5).toList();
+    assert.deepEqual(result, [1, 2, 3, 4, 5]);
   });
 });

@@ -5,7 +5,7 @@ import { GraphTraversalSource } from "../../../../src/index";
 const graph = generateRandomGraph();
 
 describe("Step - Map - reducingBarrier - max", function() {
-  it("should work on identifier", async () => {
+  it("should work on identifier", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(
       g
@@ -17,7 +17,7 @@ describe("Step - Map - reducingBarrier - max", function() {
     );
   });
 
-  it("should work on property", async () => {
+  it("should work on property", () => {
     const g = new GraphTraversalSource(graph);
     assert.equal(
       g
