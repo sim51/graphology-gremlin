@@ -1,4 +1,4 @@
-import { Values } from "./common";
+import { Values, Order } from "./common";
 import { Edge, EdgeMap } from "./edge";
 import { Vertex, VertexMap } from "./vertex";
 import { Path, PathSegment } from "./path";
@@ -11,6 +11,7 @@ export {
   Vertex,
   VertexMap,
   Values,
+  Order,
   Path,
   PathSegment,
   Traverser,

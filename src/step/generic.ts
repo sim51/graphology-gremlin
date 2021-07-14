@@ -1,5 +1,5 @@
 import { GraphTraversal } from "../traversal/graphTraversal";
-import { Traverser } from "../type";
+import { Traverser, Order } from "../type";
 /**
  * Extract of https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/Step.java
  *
@@ -36,6 +36,10 @@ export abstract class Step<S, E> implements Iterator<Traverser<E>> {
    */
   addStart(iterator: Iterator<Traverser<S>>): void {
     this.start = iterator;
+  }
+
+  by(name?: string, order?: Order | string): void {
+    throw new Error(`By ${name} ${order} not available for ${this.getLabel()}`);
   }
 
   /**

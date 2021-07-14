@@ -1,7 +1,7 @@
 import Graph from "graphology";
 import { EdgeKey, NodeKey } from "graphology-types";
 import { Step } from "../step/generic";
-import { GraphConfiguration, Traverser, Vertex, VertexMap, Edge, EdgeMap, Values } from "../type";
+import { GraphConfiguration, Traverser, Vertex, VertexMap, Edge, EdgeMap, Values, Order } from "../type";
 
 // Filter steps
 import { DedupStep } from "../step/filter/dedup";
@@ -43,6 +43,9 @@ import { MaxStep } from "../step/map/reducingBarrier/max";
 import { MeanStep } from "../step/map/reducingBarrier/mean";
 import { MinStep } from "../step/map/reducingBarrier/min";
 import { SumStep } from "../step/map/reducingBarrier/sum";
+
+// Map collecting barrier steps
+import { OrderStep } from "../step/map/collectingBarrier/order";
 
 // Side effect steps
 import { InjectStep } from "../step/sideEffect/inject";
@@ -154,6 +157,12 @@ export class GraphTraversal<S, E> implements Iterator<E> {
       this.target = target as Iterator<Traverser<E>>;
     }
     return this.target;
+  }
+
+  // The by method configures the last step
+  public by(name?: string, order?: Order | string): GraphTraversal<S, E> {
+    this.steps[this.steps.length - 1].by(name, order);
+    return this;
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -275,6 +284,13 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public sum(): GraphTraversal<S, number> {
     return this.addStep((gt: GraphTraversal<S, number>) => new SumStep(gt));
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~ Map collecting barrier steps
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  public order(): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new OrderStep(gt));
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

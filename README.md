@@ -20,7 +20,6 @@ g
   => static function with config, id, props
 
 * has filter step
-* constant
 * step scope (ex count)
 * predicate + where clauses
 * branch
