@@ -44,7 +44,7 @@ describe("Step - Map - reducingBarrier - count", function() {
     assert.equal(
       g
         .V()
-        .identity()
+        .id()
         .count()
         .next().value,
       graph.order,

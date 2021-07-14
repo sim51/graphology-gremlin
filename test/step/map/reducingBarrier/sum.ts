@@ -10,7 +10,7 @@ describe("Step - Map - reducingBarrier - sum", function() {
     assert.equal(
       g
         .V()
-        .identity()
+        .id()
         .sum()
         .next().value,
       4950,

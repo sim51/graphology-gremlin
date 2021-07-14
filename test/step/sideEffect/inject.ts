@@ -9,7 +9,7 @@ describe("Step - sideEffect - inject", function() {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()
-      .identity()
+      .id()
       .inject("-5", "-4", "-3", "-2", "-1")
       .toList();
     assert.deepEqual(result, ["-5", "-4", "-3", "-2", "-1"].concat(graph.nodes()));

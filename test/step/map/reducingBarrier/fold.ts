@@ -31,7 +31,7 @@ describe("Step - Map - reducingBarrier - fold", function() {
     const g = new GraphTraversalSource(graph);
     const result = g
       .V()
-      .identity()
+      .id()
       .fold()
       .next().value;
     assert.deepEqual(result, graph.nodes());

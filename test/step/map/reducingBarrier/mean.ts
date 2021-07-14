@@ -10,7 +10,7 @@ describe("Step - Map - reducingBarrier - mean", function() {
     assert.equal(
       g
         .V()
-        .identity()
+        .id()
         .mean()
         .next().value,
       49.5, // mean of 0,1,...,99

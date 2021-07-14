@@ -29,6 +29,7 @@ import { ValuesStep } from "../step/flatMap/values";
 
 // Map steps
 import { ElementMapStep } from "../step/map/elementMap";
+import { IdStep } from "../step/map/id";
 import { IdentityStep } from "../step/map/identity";
 import { ValueMapStep } from "../step/map/valueMap";
 
@@ -229,8 +230,11 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   public elementMap(...properties: Array<string>): GraphTraversal<S, VertexMap | EdgeMap> {
     return this.addStep((gt: GraphTraversal<S, VertexMap | EdgeMap>) => new ElementMapStep(gt, properties));
   }
-  public identity(): GraphTraversal<S, NodeKey | EdgeKey> {
-    return this.addStep((gt: GraphTraversal<S, NodeKey | EdgeKey>) => new IdentityStep(gt));
+  public id(): GraphTraversal<S, NodeKey | EdgeKey> {
+    return this.addStep((gt: GraphTraversal<S, NodeKey | EdgeKey>) => new IdStep(gt));
+  }
+  public identity(): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new IdentityStep(gt));
   }
   public valueMap(...properties: Array<string>): GraphTraversal<S, Values> {
     return this.addStep((gt: GraphTraversal<S, Values>) => new ValueMapStep(gt, properties));

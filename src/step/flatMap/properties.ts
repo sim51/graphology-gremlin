@@ -4,13 +4,10 @@ import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FlatMapStep } from "./generic";
 
 /**
- * Return the properties (ie a paris) of the traversal value.
+ * Return the properties (ie a pairs) of the traversal value.
  * @see https://tinkerpop.apache.org/docs/current/reference/#properties-step
  */
 export class PropertiesStep extends FlatMapStep<Edge | Vertex | Values, [string, unknown]> {
-  /**
-   * Default constructor.
-   */
   constructor(traversal: GraphTraversal<unknown, [string, unknown]>, properties: Array<string>) {
     super(
       "properties",

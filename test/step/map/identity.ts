@@ -5,27 +5,54 @@ import { GraphTraversalSource } from "../../../src/index";
 const graph = generateRandomGraph();
 
 describe("Step - Map - identity", function() {
-  describe("Vertex", function() {
-    it("should work", () => {
-      const g = new GraphTraversalSource(graph);
-      const result = g
+  it("should work on vertex", () => {
+    const g = new GraphTraversalSource(graph);
+    assert.deepEqual(
+      g
         .V()
         .identity()
-        .toList();
-
-      assert.deepEqual(result, graph.nodes());
-    });
+        .toList(),
+      g.V().toList(),
+    );
   });
 
-  describe("Edge", function() {
-    it("should work", () => {
-      const g = new GraphTraversalSource(graph);
-      const result = g
+  it("should work on edge", () => {
+    const g = new GraphTraversalSource(graph);
+    assert.deepEqual(
+      g
         .E()
         .identity()
-        .toList();
+        .toList(),
+      g.E().toList(),
+    );
+  });
 
-      assert.deepEqual(result, graph.edges());
-    });
+  it("should work on id", () => {
+    const g = new GraphTraversalSource(graph);
+    assert.deepEqual(
+      g
+        .V()
+        .id()
+        .toList(),
+      g
+        .V()
+        .id()
+        .toList(),
+    );
+  });
+
+  it("should work on object", () => {
+    const g = new GraphTraversalSource(graph);
+    assert.deepEqual(
+      g
+        .V()
+        .valueMap()
+        .identity()
+        .toList(),
+      g
+        .V()
+        .valueMap()
+        .toList(),
+    );
   });
 });

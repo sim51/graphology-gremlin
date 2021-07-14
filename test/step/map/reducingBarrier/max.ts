@@ -10,7 +10,7 @@ describe("Step - Map - reducingBarrier - max", function() {
     assert.equal(
       g
         .V()
-        .identity()
+        .id()
         .max()
         .next().value,
       99,

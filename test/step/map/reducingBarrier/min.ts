@@ -10,7 +10,7 @@ describe("Step - Map - reducingBarrier - min", function() {
     assert.equal(
       g
         .V()
-        .identity()
+        .id()
         .min()
         .next().value,
       0,
