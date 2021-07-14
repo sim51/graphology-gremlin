@@ -23,5 +23,6 @@ g
 * step scope (ex count)
 * predicate + where clauses
 * branch
-* group / order
+* group
 * explain / profile
+* testing order by + by + ...

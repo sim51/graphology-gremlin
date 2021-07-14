@@ -24,7 +24,7 @@ describe("Step - Map - reducingBarrier - min", function() {
         .V()
         .values("age")
         .min()
-        .next().value > 0,
+        .next().value >= 0,
       true,
     );
   });
