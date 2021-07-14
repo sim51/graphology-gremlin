@@ -19,6 +19,7 @@ import { BothVStep } from "../step/flatMap/bothV";
 import { InStep } from "../step/flatMap/in";
 import { InEStep } from "../step/flatMap/inE";
 import { InVStep } from "../step/flatMap/inV";
+import { LabelStep } from "../step/flatMap/label";
 import { OutStep } from "../step/flatMap/out";
 import { OutEStep } from "../step/flatMap/outE";
 import { OutVStep } from "../step/flatMap/outV";
@@ -201,6 +202,9 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public inE(...labels: Array<string>): GraphTraversal<S, Edge> {
     return this.addStep((gt: GraphTraversal<S, Edge>) => new InEStep(gt, labels));
+  }
+  public label(): GraphTraversal<S, string> {
+    return this.addStep((gt: GraphTraversal<S, string>) => new LabelStep(gt));
   }
   public inV(): GraphTraversal<S, Vertex> {
     return this.addStep((gt: GraphTraversal<S, Vertex>) => new InVStep(gt));
