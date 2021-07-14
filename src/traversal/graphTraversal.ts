@@ -32,6 +32,8 @@ import { ValuesStep } from "../step/flatMap/values";
 import { ElementMapStep } from "../step/map/elementMap";
 import { IdStep } from "../step/map/id";
 import { IdentityStep } from "../step/map/identity";
+import { KeyStep } from "../step/map/key";
+import { ValueStep } from "../step/map/value";
 import { ValueMapStep } from "../step/map/valueMap";
 
 // Map reducing barrier steps
@@ -239,6 +241,12 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public identity(): GraphTraversal<S, E> {
     return this.addStep((gt: GraphTraversal<S, E>) => new IdentityStep(gt));
+  }
+  public key(): GraphTraversal<S, string> {
+    return this.addStep((gt: GraphTraversal<S, string>) => new KeyStep(gt));
+  }
+  public value(): GraphTraversal<S, unknown> {
+    return this.addStep((gt: GraphTraversal<S, unknown>) => new ValueStep(gt));
   }
   public valueMap(...properties: Array<string>): GraphTraversal<S, Values> {
     return this.addStep((gt: GraphTraversal<S, Values>) => new ValueMapStep(gt, properties));
