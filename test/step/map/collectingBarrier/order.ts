@@ -1,7 +1,7 @@
 import assert from "assert";
 import { generateRandomGraph } from "../../../utils";
 import { GraphTraversalSource } from "../../../../src/index";
-import { Order } from "../../../../src/type";
+import { Order, Values } from "../../../../src/type";
 
 const graph = generateRandomGraph();
 
@@ -63,11 +63,11 @@ describe("Step - Map - collectingBarrier - order", function() {
         .valueMap()
         .order()
         .by("age", "asc")
-        .toList() as Array<any>;
+        .toList() as Array<Values>;
 
-      result.forEach((row: any, index: number) => {
+      result.forEach((row: Values, index: number) => {
         if (index < result.length - 1) {
-          assert.equal(row.age <= result[index + 1].age, true);
+          assert.equal((row.age as number) <= (result[index + 1].age as number), true);
         }
       });
     });
@@ -79,11 +79,31 @@ describe("Step - Map - collectingBarrier - order", function() {
         .valueMap()
         .order()
         .by("age", "desc")
-        .toList() as Array<any>;
+        .toList() as Array<Values>;
 
-      result.forEach((row: any, index: number) => {
+      result.forEach((row: Values, index: number) => {
         if (index < result.length - 1) {
-          assert.equal(row.age >= result[index + 1].age, true);
+          assert.equal((row.age as number) >= (result[index + 1].age as number), true);
+        }
+      });
+    });
+
+    it("should work with by age desc, name asc", () => {
+      const g = new GraphTraversalSource(graph);
+      const result = g
+        .V()
+        .valueMap()
+        .order()
+        .by("age", "desc")
+        .by("name")
+        .toList() as Array<Values>;
+
+      result.forEach((row: Values, index: number) => {
+        if (index < result.length - 1) {
+          assert.equal((row.age as number) >= (result[index + 1].age as number), true);
+          if (row.age === result[index + 1].age) {
+            assert.equal((row.name as string) < (result[index + 1].name as string), true);
+          }
         }
       });
     });

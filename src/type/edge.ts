@@ -19,4 +19,8 @@ export class Edge {
     if (properties.length > 0) return { ...pick(this.properties, properties), id: this.id, label: this.type };
     else return { ...this.properties, id: this.id, label: this.type };
   }
+
+  toString(): string {
+    return `${this.id}`;
+  }
 }

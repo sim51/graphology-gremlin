@@ -19,4 +19,8 @@ export class Vertex {
     if (properties.length > 0) return { ...pick(this.properties, properties), id: this.id, label: this.labels };
     else return { ...this.properties, id: this.id, label: this.labels };
   }
+
+  toString(): string {
+    return `${this.id}`;
+  }
 }

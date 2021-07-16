@@ -39,6 +39,7 @@ import { ValueMapStep } from "../step/map/valueMap";
 // Map reducing barrier steps
 import { CountStep } from "../step/map/reducingBarrier/count";
 import { FoldStep } from "../step/map/reducingBarrier/fold";
+import { GroupStep } from "../step/map/reducingBarrier/group";
 import { MaxStep } from "../step/map/reducingBarrier/max";
 import { MeanStep } from "../step/map/reducingBarrier/mean";
 import { MinStep } from "../step/map/reducingBarrier/min";
@@ -272,6 +273,9 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public fold(): GraphTraversal<S, Array<E>> {
     return this.addStep((gt: GraphTraversal<S, Array<E>>) => new FoldStep<E>(gt));
+  }
+  public group(): GraphTraversal<S, { [key: string]: Array<E> }> {
+    return this.addStep((gt: GraphTraversal<S, { [key: string]: Array<E> }>) => new GroupStep<E>(gt));
   }
   public max(): GraphTraversal<S, number> {
     return this.addStep((gt: GraphTraversal<S, number>) => new MaxStep(gt));
