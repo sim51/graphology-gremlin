@@ -9,6 +9,7 @@ import { HasIdStep } from "../step/filter/hasId";
 import { HasKeyStep } from "../step/filter/hasKey";
 import { HasLabelStep } from "../step/filter/hasLabel";
 import { HasNotStep } from "../step/filter/hasNot";
+import { IsStep } from "../step/filter/is";
 import { RangeStep } from "../step/filter/range";
 import { TailStep } from "../step/filter/tail";
 
@@ -186,6 +187,9 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public hasNot(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Values> {
     return this.addStep((gt: GraphTraversal<S, Vertex | Edge | Values>) => new HasNotStep(gt, keys));
+  }
+  public is(value: E): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new IsStep<E>(gt, value));
   }
   public range(start: number, end: number): GraphTraversal<S, E> {
     return this.addStep((gt: GraphTraversal<S, E>) => new RangeStep<E>(gt, start, end));
