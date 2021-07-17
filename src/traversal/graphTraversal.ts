@@ -33,6 +33,7 @@ import { ElementMapStep } from "../step/map/elementMap";
 import { IdStep } from "../step/map/id";
 import { IdentityStep } from "../step/map/identity";
 import { KeyStep } from "../step/map/key";
+import { SelectStep } from "../step/map/select";
 import { ValueStep } from "../step/map/value";
 import { ValueMapStep } from "../step/map/valueMap";
 
@@ -50,6 +51,8 @@ import { OrderStep } from "../step/map/collectingBarrier/order";
 
 // Side effect steps
 import { InjectStep } from "../step/sideEffect/inject";
+import { AsStep } from "../step/sideEffect/as";
+
 /**
  * Extract from https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/Traversal.java
  *
@@ -255,6 +258,9 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   public key(): GraphTraversal<S, string> {
     return this.addStep((gt: GraphTraversal<S, string>) => new KeyStep(gt));
   }
+  public select(...names: Array<string>): GraphTraversal<S, Values> {
+    return this.addStep((gt: GraphTraversal<S, Values>) => new SelectStep(gt, names));
+  }
   public value(): GraphTraversal<S, unknown> {
     return this.addStep((gt: GraphTraversal<S, unknown>) => new ValueStep(gt));
   }
@@ -302,5 +308,8 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   public inject(...items: Array<E>): GraphTraversal<S, E> {
     return this.addStep((gt: GraphTraversal<S, E>) => new InjectStep(gt, items));
+  }
+  public as(name: string): GraphTraversal<S, E> {
+    return this.addStep((gt: GraphTraversal<S, E>) => new AsStep(gt, name));
   }
 }

@@ -13,17 +13,25 @@ export class Traverser<S> {
    * The inner value of the traverser.
    */
   value: S;
+
   /**
    * Traverser path, ie. the value of each previous steps with their name
    */
   path: Array<{ label: string; value: unknown }> = [];
 
   /**
+   * Store of query variables.
+   * Given a variable name, it returns the array index in the path
+   */
+  variables: { [key: string]: number } = {};
+
+  /**
    * Default constructor.
    */
-  constructor(value: S, path?: Array<{ label: string; value: unknown }>) {
+  constructor(value: S, path?: Array<{ label: string; value: unknown }>, variables?: { [key: string]: number }) {
     this.value = value;
     if (path) this.path = path;
+    if (variables) this.variables = variables;
   }
 
   /**
@@ -31,6 +39,24 @@ export class Traverser<S> {
    */
   get(): S {
     return this.value;
+  }
+
+  /**
+   * Return the value of the traverser.
+   */
+  getAs(name: string): unknown {
+    if (this.variables[name] !== undefined && this.variables[name] < this.path.length) {
+      return this.path[this.variables[name]].value;
+    }
+    return null;
+  }
+
+  /**
+   * Set a name to the current value.
+   */
+  setAs(name: string): this {
+    this.variables[name] = this.path.length - 1;
+    return this;
   }
 
   /**
@@ -46,6 +72,6 @@ export class Traverser<S> {
   makeNextTraverser<T>(label: string, value: T): Traverser<T> {
     const copyPath = this.path.slice();
     copyPath.push({ label, value });
-    return new Traverser<T>(value, copyPath);
+    return new Traverser<T>(value, copyPath, this.variables);
   }
 }
