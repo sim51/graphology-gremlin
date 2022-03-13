@@ -1,15 +1,14 @@
 import { pick } from "lodash";
-import { NodeKey } from "graphology-types";
 import { Values } from "./common";
 
-export type VertexMap = { id: NodeKey; label: Array<string> } & Values;
+export type VertexMap = { id: string; label: Array<string> } & Values;
 
 export class Vertex {
-  id: NodeKey;
+  id: string;
   labels: Array<string>;
   properties: Values;
 
-  constructor(id: NodeKey, labels: Array<string> = [], properties: Values = {}) {
+  constructor(id: string, labels: Array<string> = [], properties: Values = {}) {
     this.id = id;
     this.labels = labels;
     this.properties = properties;

@@ -1,7 +1,7 @@
 import assert from "assert";
 import { generateRandomGraph } from "../../../utils";
 import { GraphTraversalSource } from "../../../../src/index";
-import { Order, Values } from "../../../../src/type";
+import { Order, Values } from "../../../../src/types";
 
 const graph = generateRandomGraph();
 

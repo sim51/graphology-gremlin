@@ -2,7 +2,7 @@
  * Perform some operations on the traverser and pass it to the next step
  */
 import { GraphTraversal } from "../../traversal/graphTraversal";
-import { Traverser } from "../../type";
+import { Traverser } from "../../types";
 import { Step } from "../generic";
 
 /**

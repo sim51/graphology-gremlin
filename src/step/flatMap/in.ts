@@ -1,6 +1,5 @@
 import { omit } from "lodash";
-import { EdgeKey } from "graphology-types";
-import { Edge, Vertex, Traverser } from "../../type";
+import { Edge, Vertex, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FlatMapStep } from "./generic";
 
@@ -19,7 +18,7 @@ export class InStep extends FlatMapStep<Vertex, Vertex> {
         const source = traverser.value;
         return graph
           .inEdges(source.id)
-          .map((id: EdgeKey) => {
+          .map((id: string) => {
             const props = graph.getEdgeAttributes(id);
             return new Edge(id, props[config.edge_label_field] || "", omit(props, [config.edge_label_field]));
           })

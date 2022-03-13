@@ -1,5 +1,5 @@
 import { pick } from "lodash";
-import { Edge, Vertex, Values, Traverser } from "../../type";
+import { Edge, Vertex, Values, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { MapStep } from "./generic";
 

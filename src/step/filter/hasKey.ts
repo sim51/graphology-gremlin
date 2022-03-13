@@ -1,4 +1,4 @@
-import { Edge, Vertex, Values, Traverser } from "../../type";
+import { Edge, Vertex, Values, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FilterStep } from "./generic";
 

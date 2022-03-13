@@ -1,6 +1,5 @@
 import Graph from "graphology";
-import { NodeKey, EdgeKey } from "graphology-types";
-import { Traverser, Vertex, Edge, GraphConfiguration, DEFAULT_GRAPH_CONFIGURATION } from "../type";
+import { Traverser, Vertex, Edge, GraphConfiguration, DEFAULT_GRAPH_CONFIGURATION } from "../types";
 import { GraphTraversal } from "./graphTraversal";
 // start steps
 import { AddEStep } from "../step/start/addE";
@@ -49,14 +48,14 @@ export class GraphTraversalSource {
   /**
    * List all vertex of the graph or a selection.
    */
-  V(...ids: Array<NodeKey>): GraphTraversal<NodeKey, Vertex> {
-    const nodes = (ids.length > 0 ? ids : this.graph.nodes()).map((id: NodeKey) => new Traverser(id));
-    return new GraphTraversal<NodeKey, Vertex>(
+  V(...ids: Array<string>): GraphTraversal<string, Vertex> {
+    const nodes = (ids.length > 0 ? ids : this.graph.nodes()).map((id: string) => new Traverser(id));
+    return new GraphTraversal<string, Vertex>(
       this.graph,
       this.config,
       nodes[Symbol.iterator](),
       [],
-      (gt: GraphTraversal<NodeKey, Vertex>) => new VStep(gt),
+      (gt: GraphTraversal<string, Vertex>) => new VStep(gt),
     );
   }
 
@@ -76,14 +75,14 @@ export class GraphTraversalSource {
   /**
    * List all edges of the graph or a selection.
    */
-  E(...ids: Array<EdgeKey>): GraphTraversal<EdgeKey, Edge> {
-    const edges = (ids.length > 0 ? ids : this.graph.edges()).map((id: EdgeKey) => new Traverser(id));
-    return new GraphTraversal<EdgeKey, Edge>(
+  E(...ids: Array<string>): GraphTraversal<string, Edge> {
+    const edges = (ids.length > 0 ? ids : this.graph.edges()).map((id: string) => new Traverser(id));
+    return new GraphTraversal<string, Edge>(
       this.graph,
       this.config,
       edges[Symbol.iterator](),
       [],
-      (gt: GraphTraversal<EdgeKey, Edge>) => new EStep(gt),
+      (gt: GraphTraversal<string, Edge>) => new EStep(gt),
     );
   }
 

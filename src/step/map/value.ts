@@ -1,4 +1,4 @@
-import { Traverser } from "../../type";
+import { Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { MapStep } from "./generic";
 

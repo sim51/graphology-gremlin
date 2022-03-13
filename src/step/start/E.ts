@@ -1,6 +1,5 @@
 import { omit } from "lodash";
-import { EdgeKey } from "graphology-types";
-import { Edge, Traverser } from "../../type";
+import { Edge, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { MapStep } from "../map/generic";
 
@@ -8,7 +7,7 @@ import { MapStep } from "../map/generic";
  * Retrieve a list of edges or all graph edges.
  * Ex: g.E()
  */
-export class EStep extends MapStep<EdgeKey, Edge> {
+export class EStep extends MapStep<string, Edge> {
   /**
    * Default constructor.
    */
@@ -16,7 +15,7 @@ export class EStep extends MapStep<EdgeKey, Edge> {
     super(
       "E",
       traversal,
-      (traverser: Traverser<EdgeKey>): Edge => {
+      (traverser: Traverser<string>): Edge => {
         const id = traverser.value;
         const props = traversal.getGraph().getEdgeAttributes(id);
         return new Edge(

@@ -1,6 +1,6 @@
 import { orderBy } from "lodash";
 import { GraphTraversal } from "../../../traversal/graphTraversal";
-import { Order, Traverser } from "../../../type";
+import { Order, Traverser } from "../../../types";
 import { CollectingBarrierStep } from "./generic";
 
 /**

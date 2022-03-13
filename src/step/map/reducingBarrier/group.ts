@@ -1,6 +1,6 @@
 import { GraphTraversal } from "../../../traversal/graphTraversal";
 import { ReducingBarrierStep } from "./generic";
-import { Edge, Vertex, Values } from "../../../type";
+import { Edge, Vertex, Values } from "../../../types";
 
 /**
  * Group the traversal values

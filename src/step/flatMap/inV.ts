@@ -1,6 +1,5 @@
 import { omit } from "lodash";
-import { EdgeKey } from "graphology-types";
-import { Vertex, Traverser } from "../../type";
+import { Vertex, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FlatMapStep } from "./generic";
 
@@ -19,7 +18,7 @@ export class InVStep extends FlatMapStep<Vertex, Vertex> {
         const source = traverser.value;
         return graph
           .inEdges(source.id)
-          .map((id: EdgeKey) => {
+          .map((id: string) => {
             const nodeKey = graph.opposite(source.id, id);
             const props = graph.getNodeAttributes(nodeKey);
             return new Vertex(

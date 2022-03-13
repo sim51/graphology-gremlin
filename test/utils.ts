@@ -1,7 +1,6 @@
 import Graph, { MultiDirectedGraph } from "graphology";
-import { NodeKey, EdgeKey } from "graphology-types";
 import { erdosRenyi } from "graphology-generators/random";
-import faker from "faker";
+import faker from "@faker-js/faker";
 
 const NODE_LABELS = ["Man", "Woman", "Other"];
 const EDGE_TYPES = ["KNOWS", "FRIEND_OF", "COLLEAGUE_OF"];
@@ -12,7 +11,7 @@ const randomValue = (list: Array<string>): string => {
 export function generateRandomGraph(): Graph {
   const graph: Graph = erdosRenyi(MultiDirectedGraph, { order: 100, probability: 0.5 });
 
-  graph.nodes().forEach((nodeKey: NodeKey) => {
+  graph.nodes().forEach((nodeKey: string) => {
     graph.mergeNodeAttributes(nodeKey, {
       "@labels": ["Person", randomValue(NODE_LABELS)],
       age: Math.floor(Math.random() * 100),
@@ -21,7 +20,7 @@ export function generateRandomGraph(): Graph {
       valid: faker.datatype.boolean(),
     });
   });
-  graph.edges().forEach((edgeKey: EdgeKey) => {
+  graph.edges().forEach((edgeKey: string) => {
     graph.mergeEdgeAttributes(edgeKey, {
       "@type": randomValue(EDGE_TYPES),
       weight: Math.floor(Math.random() * 10),

@@ -24,3 +24,11 @@ g
 * predicate + where clauses + as
 * explain / profile
 * step scope (ex count)
+
+Steps : array of constructor !
+
+## Init
+
+- get type of nodes
+- get type of edges
+- id generator

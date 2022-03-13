@@ -1,5 +1,5 @@
 import { isEqual } from "lodash";
-import { Traverser } from "../../type";
+import { Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FilterStep } from "./generic";
 

@@ -1,14 +1,13 @@
 import { omit } from "lodash";
-import { NodeKey } from "graphology-types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
-import { Traverser, Vertex } from "../../type";
+import { Traverser, Vertex } from "../../types";
 import { MapStep } from "../map/generic";
 
 /**
  * Retrieve a list of vertex or all graph vertex.
  * Ex: g.V()
  */
-export class VStep extends MapStep<NodeKey, Vertex> {
+export class VStep extends MapStep<string, Vertex> {
   /**
    * Default constructor.
    */
@@ -16,7 +15,7 @@ export class VStep extends MapStep<NodeKey, Vertex> {
     super(
       "V",
       traversal,
-      (traverser: Traverser<NodeKey>): Vertex => {
+      (traverser: Traverser<string>): Vertex => {
         const id = traverser.value;
         const props = traversal.getGraph().getNodeAttributes(id);
         return new Vertex(

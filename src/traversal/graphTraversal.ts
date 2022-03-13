@@ -1,7 +1,16 @@
 import Graph from "graphology";
-import { EdgeKey, NodeKey } from "graphology-types";
 import { Step } from "../step/generic";
-import { GraphConfiguration, Traverser, Vertex, VertexMap, Edge, EdgeMap, Values, Order } from "../type";
+import {
+  GraphConfiguration,
+  DEFAULT_GRAPH_CONFIGURATION,
+  Traverser,
+  Vertex,
+  VertexMap,
+  Edge,
+  EdgeMap,
+  Values,
+  Order,
+} from "../types";
 
 // Filter steps
 import { DedupStep } from "../step/filter/dedup";
@@ -74,6 +83,14 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   private start: Iterator<Traverser<S>>;
   private target: Iterator<Traverser<E>> | null = null;
 
+  public static newEmpty(): GraphTraversal<null, null> {
+    return new GraphTraversal<null, null>(
+      new Graph(),
+      DEFAULT_GRAPH_CONFIGURATION,
+      [new Traverser(null)][Symbol.iterator](),
+    );
+  }
+
   constructor(
     graph: Graph,
     config: GraphConfiguration,
@@ -98,12 +115,25 @@ export class GraphTraversal<S, E> implements Iterator<E> {
     };
   }
 
+  /**
+   * Getter for the graph.
+   */
   public getGraph(): Graph {
     return this.graph;
   }
 
+  /**
+   * Getter for the configuration.
+   */
   public getConfig(): GraphConfiguration {
     return this.config;
+  }
+
+  /**
+   * Getter for the traversal steps.
+   */
+  public getSteps(): Array<Step<unknown, unknown>> {
+    return this.steps;
   }
 
   /**
@@ -137,7 +167,7 @@ export class GraphTraversal<S, E> implements Iterator<E> {
    * Give the explain of the traversal.
    */
   public explain(): string {
-    return this.steps.map(s => s.getLabel()).join(" -> ");
+    return this.steps.map((s) => s.getLabel()).join(" -> ");
   }
 
   /**
@@ -176,7 +206,7 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   public dedup(): GraphTraversal<S, E> {
     return this.addStep((gt: GraphTraversal<S, E>) => new DedupStep<E>(gt));
   }
-  public hasId(...keys: Array<EdgeKey> | Array<NodeKey>): GraphTraversal<S, Vertex | Edge> {
+  public hasId(...keys: Array<string>): GraphTraversal<S, Vertex | Edge> {
     return this.addStep((gt: GraphTraversal<S, Vertex | Edge>) => new HasIdStep(gt, keys));
   }
   public hasKey(...keys: Array<string>): GraphTraversal<S, Edge | Vertex | Values> {
@@ -253,8 +283,8 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   public elementMap(...properties: Array<string>): GraphTraversal<S, VertexMap | EdgeMap> {
     return this.addStep((gt: GraphTraversal<S, VertexMap | EdgeMap>) => new ElementMapStep(gt, properties));
   }
-  public id(): GraphTraversal<S, NodeKey | EdgeKey> {
-    return this.addStep((gt: GraphTraversal<S, NodeKey | EdgeKey>) => new IdStep(gt));
+  public id(): GraphTraversal<S, string> {
+    return this.addStep((gt: GraphTraversal<S, string>) => new IdStep(gt));
   }
   public identity(): GraphTraversal<S, E> {
     return this.addStep((gt: GraphTraversal<S, E>) => new IdentityStep(gt));

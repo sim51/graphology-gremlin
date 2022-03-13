@@ -1,15 +1,14 @@
 import { pick } from "lodash";
-import { EdgeKey } from "graphology-types";
 import { Values } from "./common";
 
-export type EdgeMap = { id: EdgeKey; label: string } & Values;
+export type EdgeMap = { id: string; label: string } & Values;
 
 export class Edge {
-  id: EdgeKey;
+  id: string;
   type: string;
   properties: Values;
 
-  constructor(id: EdgeKey, type = "", properties: Values = {}) {
+  constructor(id: string, type = "", properties: Values = {}) {
     this.id = id;
     this.type = type;
     this.properties = properties;

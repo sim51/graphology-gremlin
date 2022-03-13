@@ -2,7 +2,7 @@ import assert from "assert";
 import { omit } from "lodash";
 import { generateRandomGraph } from "../../utils";
 import { GraphTraversalSource } from "../../../src/index";
-import { Vertex, Edge } from "../../../src/type";
+import { Vertex, Edge } from "../../../src/types";
 
 const graph = generateRandomGraph();
 

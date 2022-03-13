@@ -1,5 +1,4 @@
-import { EdgeKey, NodeKey } from "graphology-types";
-import { Edge, Vertex, Traverser } from "../../type";
+import { Edge, Vertex, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FilterStep } from "./generic";
 
@@ -8,7 +7,7 @@ import { FilterStep } from "./generic";
  * https://tinkerpop.apache.org/docs/current/reference/#has-step
  */
 export class HasIdStep extends FilterStep<Edge | Vertex> {
-  constructor(traversal: GraphTraversal<unknown, Edge | Vertex>, keys: Array<EdgeKey> | Array<NodeKey>) {
+  constructor(traversal: GraphTraversal<unknown, Edge | Vertex>, keys: Array<string> | Array<string>) {
     super("hasId", traversal, (traverser: Traverser<Edge | Vertex>): boolean => {
       return keys.includes(traverser.value.id);
     });

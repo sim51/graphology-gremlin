@@ -1,5 +1,5 @@
 import { GraphTraversal } from "../../traversal/graphTraversal";
-import { Edge } from "../../type";
+import { Edge } from "../../types";
 import { MapStep } from "../map/generic";
 
 /**
@@ -19,7 +19,8 @@ export class AddEStep extends MapStep<null, Edge> {
       "AddE",
       traversal,
       (): Edge => {
-        return new Edge(new Date().getTime());
+        // TODO: use an ID generator
+        return new Edge(`${new Date().getTime()}`);
       },
     );
   }
