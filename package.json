@@ -9,33 +9,36 @@
     "graph",
     "graphlogy"
   ],
-  "main": "./lib/umd/graphology-gremlin.min.js",
-  "module": "./lib/esm/",
-  "typings": "./lib/esm/",
+  "main": "./lib/graphology-gremlin.umd.min.js",
+  "module": "./lib/graphology-gremlin.esm.min.js",
+  "typings": "./lib/types/",
   "exports": {
-    "./": "./lib/esm"
+    "./": "./lib/graphology-gremlin.esm.min.js"
   },
   "scripts": {
-    "clean": "rimraf lib/ coverage .nyc_output",
-    "lint": "esw . --ext .ts",
-    "compile": "tsc",
-    "build": "npm run clean && npm run lint && npm run compile",
+    "clean": "rimraf lib/ coverage .nyc_output .rollup_cache",
+    "compile": "rollup -c",
+    "build": "npm run clean && npm run compile",
+    "start": "rollup -c -w",
     "test": "nyc --reporter=html --reporter=text mocha --exit -r ts-node/register ./test/**/*.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-beta.0",
+    "@rbnlffl/rollup-plugin-eslint": "^3.0.0",
+    "@rollup/plugin-typescript": "^8.3.1",
     "@types/lodash": "^4.14.179",
     "@types/mocha": "^9.1.0",
     "@types/object-hash": "^2.2.1",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "eslint": "^8.11.0",
-    "eslint-watch": "^8.0.0",
     "graphology-generators": "^0.11.2",
     "graphology-types": "^0.24.3",
     "mocha": "^8.3.2",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
+    "rollup": "^2.68.0",
+    "rollup-plugin-terser": "^7.0.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2"
   },
