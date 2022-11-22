@@ -20,6 +20,6 @@ export class Vertex {
   }
 
   toString(): string {
-    return `${this.id}`;
+    return `v[${this.id}]`;
   }
 }

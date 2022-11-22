@@ -1,4 +1,4 @@
-import hash from "object-hash";
+// import hash from "object-hash";
 import { Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
 import { FilterStep } from "./generic";
@@ -12,7 +12,7 @@ export class DedupStep<T> extends FilterStep<T> {
 
   constructor(traversal: GraphTraversal<unknown, T>) {
     super("Dedup", traversal, (traverser: Traverser<T>): boolean => {
-      const id = hash(traverser.value);
+      const id = `${JSON.stringify(traverser.value)}`; //hash(traverser.value);
       const result = this.alreadyReturned.has(id);
       if (result === false) {
         this.alreadyReturned.add(id);

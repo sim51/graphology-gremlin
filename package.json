@@ -17,36 +17,42 @@
   },
   "scripts": {
     "clean": "rimraf lib/ coverage .nyc_output .rollup_cache",
-    "compile": "rollup -c",
-    "build": "npm run clean && npm run compile",
-    "start": "rollup -c -w",
-    "test": "nyc --reporter=html --reporter=text mocha --exit -r ts-node/register ./test/**/*.ts"
+    "lint": "esw . --ext .ts",
+    "compile": "tsc -b",
+    "build": "rollup --config rollup.config.ts --configPlugin typescript",
+    "test:unit": "nyc --reporter=html --reporter=text mocha --exit -r ts-node/register ./test/**/*.ts",
+    "test:tck": "cucumber-js",
+    "test": "npm run test:unit & npm run test:tck"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-beta.0",
-    "@rbnlffl/rollup-plugin-eslint": "^3.0.0",
-    "@rollup/plugin-typescript": "^8.3.1",
-    "@types/lodash": "^4.14.179",
-    "@types/mocha": "^9.1.0",
+    "@faker-js/faker": "^7.6.0",
+    "@rollup/plugin-eslint": "^9.0.1",
+    "@rollup/plugin-terser": "^0.1.0",
+    "@rollup/plugin-typescript": "^9.0.2",
+    "@types/assert": "^1.5.6",
+    "@types/lodash": "^4.14.189",
+    "@types/mocha": "^10.0.0",
     "@types/object-hash": "^2.2.1",
-    "@typescript-eslint/eslint-plugin": "^5.14.0",
-    "@typescript-eslint/parser": "^5.14.0",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
     "eslint": "^8.11.0",
+    "graphology": "^0.25.1",
     "graphology-generators": "^0.11.2",
-    "graphology-types": "^0.24.3",
-    "graphology": "^0.24.1",
-    "mocha": "^8.3.2",
+    "graphology-types": "^0.24.5",
+    "mocha": "^10.1.0",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.68.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.2"
+    "rollup": "^3.3.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "graphology": "^0.24.1"
+    "graphology": "^0.25.1"
   },
   "dependencies": {
+    "@cucumber/cucumber": "^8.8.0",
+    "graphology-graphml": "^0.5.2",
+    "graphology-utils": "^2.5.2",
     "lodash": "^4.17.21",
     "object-hash": "^3.0.0"
   }

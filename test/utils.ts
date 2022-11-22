@@ -1,6 +1,7 @@
 import Graph, { MultiDirectedGraph } from "graphology";
 import { erdosRenyi } from "graphology-generators/random";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
+import { promises as fsp } from "fs";
 
 const NODE_LABELS = ["Man", "Woman", "Other"];
 const EDGE_TYPES = ["KNOWS", "FRIEND_OF", "COLLEAGUE_OF"];
@@ -16,7 +17,7 @@ export function generateRandomGraph(): Graph {
       "@labels": ["Person", randomValue(NODE_LABELS)],
       age: Math.floor(Math.random() * 100),
       email: faker.internet.email(),
-      name: faker.name.findName(),
+      name: faker.name.fullName(),
       valid: faker.datatype.boolean(),
     });
   });
@@ -28,4 +29,12 @@ export function generateRandomGraph(): Graph {
     });
   });
   return graph;
+}
+
+/**
+ * read a file and returns its content as a string.
+ */
+export async function readFile(file: string): Promise<string> {
+  const content = await fsp.readFile(file, { encoding: "utf8" });
+  return content;
 }

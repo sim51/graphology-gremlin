@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.base.json",
-  "include": ["./src"],
+  "include": ["./src", "global.d.ts"],
   "compilerOptions": {
-    "declarationDir": "./types",
-    "outDir": "./esm",
+    "declarationDir": "./lib/types",
+    "outDir": "./lib/esm",
     "rootDir": "./src"
   }
 }

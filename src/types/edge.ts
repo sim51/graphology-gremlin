@@ -20,6 +20,6 @@ export class Edge {
   }
 
   toString(): string {
-    return `${this.id}`;
+    return `e[${this.id}]`;
   }
 }
