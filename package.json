@@ -20,7 +20,7 @@
     "lint": "esw . --ext .ts",
     "compile": "tsc -b",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
-    "test:unit": "nyc --reporter=html --reporter=text mocha --exit -r ts-node/register ./test/**/*.ts",
+    "test:unit": "nyc --reporter=html --reporter=text mocha --exit -r ts-node/register ./test/unit/**/*.ts",
     "test:tck": "cucumber-js",
     "test": "npm run test:unit & npm run test:tck"
   },
