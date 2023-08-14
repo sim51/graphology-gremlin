@@ -3,7 +3,13 @@ import { Edge, EdgeMap } from "./edge";
 import { Vertex, VertexMap } from "./vertex";
 import { Path, PathSegment } from "./path";
 import { Traverser } from "./traverser";
-import { GraphConfiguration, DEFAULT_GRAPH_CONFIGURATION } from "./graphConfiguration";
+import { BaseGraph, DEFAULT_GRAPH_CONFIGURATION, GraphConfiguration } from "./graph";
+
+export class NotImplemented extends Error {
+  constructor(message?: string) {
+    super(message);
+  }
+}
 
 export {
   Edge,
@@ -15,6 +21,7 @@ export {
   Path,
   PathSegment,
   Traverser,
+  BaseGraph,
   GraphConfiguration,
   DEFAULT_GRAPH_CONFIGURATION,
 };

@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import assert from "assert";
 import { Then } from "@cucumber/cucumber";
 
@@ -12,9 +13,12 @@ Then("the result should be ordered", function (this: CustomWorld, dataTable) {
 });
 
 Then("the result should be of", function (this: CustomWorld, dataTable) {
-  // Write code here that turns the phrase above into concrete actions
-  console.log(dataTable);
-  return "pending";
+  const listOfPossibleResult = this.parseDataTable(dataTable);
+  this.result?.forEach((item) => {
+    if (!listOfPossibleResult.some((e) => isEqual(e, item))) {
+      assert.fail(`Resum ${JSON.stringify(item)} is not part of ${dataTable}`);
+    }
+  });
 });
 
 Then("the result should be empty", function (this: CustomWorld) {

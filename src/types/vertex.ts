@@ -1,4 +1,6 @@
 import { pick } from "lodash";
+import Graph from "graphology";
+
 import { Values } from "./common";
 
 export type VertexMap = { id: string; label: Array<string> } & Values;
@@ -14,9 +16,13 @@ export class Vertex {
     this.properties = properties;
   }
 
-  toMap(properties: Array<string> = []): VertexMap {
-    if (properties.length > 0) return { ...pick(this.properties, properties), id: this.id, label: this.labels };
-    else return { ...this.properties, id: this.id, label: this.labels };
+  toMap(_graph: Graph, properties: Array<string> = []): VertexMap {
+    const vertex = {
+      id: this.id,
+      label: this.labels,
+    };
+    if (properties.length > 0) return { ...pick(this.properties, properties), ...vertex };
+    return { ...this.properties, ...vertex };
   }
 
   toString(): string {

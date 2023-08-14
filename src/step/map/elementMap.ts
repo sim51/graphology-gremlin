@@ -9,7 +9,7 @@ import { MapStep } from "./generic";
 export class ElementMapStep extends MapStep<Edge | Vertex, EdgeMap | VertexMap> {
   constructor(traversal: GraphTraversal<unknown, EdgeMap | VertexMap>, properties: Array<string>) {
     super("elementMap", traversal, (traverser: Traverser<Edge | Vertex>): EdgeMap | VertexMap => {
-      return traverser.value.toMap(properties);
+      return traverser.value.toMap(traversal.getGraph(), properties);
     });
   }
 }

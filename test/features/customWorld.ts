@@ -1,7 +1,7 @@
 import { setWorldConstructor, World, IWorldOptions } from "@cucumber/cucumber";
 import { updateGraphKeys } from "graphology-utils";
 import Graph from "graphology";
-import { tail, isArray, head } from "lodash";
+import { tail, isArray, head, toPairs, fromPairs } from "lodash";
 
 import { GraphTraversal } from "../../src/traversal/graphTraversal";
 import { GraphTraversalSource } from "../../src/traversal/graphTraversalSource";
@@ -39,6 +39,10 @@ export class CustomWorld extends World {
   loadGraph(graph: Graph) {
     // we update the graph ids to have name instead of id
     const nGraph = updateGraphKeys(graph, updateNodeId, updateEdgeId);
+    nGraph.updateEachNodeAttributes((_node, attr) => ({
+      ...attr,
+      labelV: [attr.labelV],
+    }));
     this.g = new GraphTraversalSource(nGraph);
     this.g.with("vertex_label_field", "labelV").with("edge_label_field", "labelE");
   }
@@ -67,12 +71,12 @@ export class CustomWorld extends World {
     return eval(script);
   }
 
-  parseDataTable(dataTable: any): any {
+  parseDataTable(dataTable: any): Array<any> {
     if (dataTable.rawTable && isArray(dataTable.rawTable)) {
       if (dataTable.rawTable.length >= 2) {
         return dataTable.rawTable[1].map((i: any) => this.parseStringExpression(i));
       }
-      return;
+      return [];
     }
     throw new Error("No raw table found");
   }
@@ -81,18 +85,31 @@ export class CustomWorld extends World {
     // see https://github.com/apache/tinkerpop/blob/master/gremlin-test/src/main/java/org/apache/tinkerpop/gremlin/features/StepDefinition.java
     const parsers: Array<{ name: string; regex: RegExp; fn: (...args: any[]) => unknown }> = [
       // v[]
-      { name: "get node ID string", regex: /v\[(.+)\]\.sid/, fn: (id) => head(this.g?.V(id).id().toList()) },
-      { name: "get node ID", regex: /v\[(.+)\]\.id/, fn: (id) => head(this.g?.V(id).id().toList()) },
-      { name: "get node by ID", regex: /v\[(.+)\]/, fn: (id) => head(this.g?.V(id).toList()) },
+      { name: "get node ID string", regex: /^v\[(.+)\]\.sid$/, fn: (id) => head(this.g?.V(id).id().toList()) },
+      { name: "get node ID", regex: /^v\[(.+)\]\.id$/, fn: (id) => head(this.g?.V(id).id().toList()) },
+      { name: "get node by ID", regex: /^v\[(.+)\]$/, fn: (id) => head(this.g?.V(id).toList()) },
       // e[]
-      { name: "get edge ID string", regex: /e\[(.+)\]\.sid/, fn: (id) => head(this.g?.E(id).id().toList()) },
-      { name: "get edge ID", regex: /e\[(.+)\]\.id/, fn: (id) => head(this.g?.E(id).id().toList()) },
-      { name: "get edge by ID", regex: /e\[(.+)\]/, fn: (id) => head(this.g?.E(id).toList()) },
+      { name: "get edge ID string", regex: /^e\[(.+)\]\.sid$/, fn: (id) => head(this.g?.E(id).id().toList()) },
+      { name: "get edge ID", regex: /^e\[(.+)\]\.id$/, fn: (id) => head(this.g?.E(id).id().toList()) },
+      { name: "get edge by ID", regex: /^e\[(.+)\]$/, fn: (id) => head(this.g?.E(id).toList()) },
       // d[]
-      { name: "NaN", regex: /d\[NaN\]/, fn: () => NaN },
-      { name: "Infinity", regex: /d\[Infinity\]/, fn: () => Infinity },
-      { name: "-Infinity", regex: /d\[-Infinity\]/, fn: () => -Infinity },
-      { name: "number", regex: /d\[(.+)]\../, fn: (n) => +n },
+      { name: "NaN", regex: /^d\[NaN\]$/, fn: () => NaN },
+      { name: "Infinity", regex: /^d\[Infinity\]$/, fn: () => Infinity },
+      { name: "-Infinity", regex: /^d\[-Infinity\]$/, fn: () => -Infinity },
+      { name: "number", regex: /^d\[(.+)]\..$/, fn: (n) => +n },
+      // m[]
+      {
+        name: "json",
+        regex: /^m\[(.*)]$/,
+        fn: (n) =>
+          fromPairs(
+            toPairs(JSON.parse(n)).map((keyvalue) => keyvalue.map((item) => this.parseStringExpression(`${item}`))),
+          ),
+      },
+      // t[]
+      { name: "string", regex: /^t\[(.*)]$/, fn: (n) => n },
+      // D[]
+      { name: "direction", regex: /^D\[(.*)]$/, fn: (n) => n },
     ];
 
     for (let parser of parsers) {

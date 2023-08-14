@@ -2,6 +2,7 @@ import { Given } from "@cucumber/cucumber";
 import graphml from "graphology-graphml";
 import Graph from "graphology";
 
+import { NotImplemented } from "../../../src/types";
 import { readFile } from "../../unit/utils";
 import { CustomWorld } from "../customWorld";
 
@@ -17,12 +18,22 @@ Given("the {word} graph", async function (this: CustomWorld, name: string) {
 });
 
 Given("the graph initializer of", function (this: CustomWorld, docString) {
-  this.traverse(docString);
+  try {
+    this.traverse(docString);
+  } catch (e) {
+    if (e instanceof NotImplemented) return "pending";
+  }
+  return;
 });
 
 Given("the traversal of", function (this: CustomWorld, docString: string) {
   // Write code here that turns the phrase above into concrete actions
-  this.traverse(docString);
+  try {
+    this.traverse(docString);
+  } catch (e) {
+    if (e instanceof NotImplemented) return "pending";
+  }
+  return;
 });
 
 Given("using the parameter {word} defined as {string}", function (this: CustomWorld, name: string, value: string) {

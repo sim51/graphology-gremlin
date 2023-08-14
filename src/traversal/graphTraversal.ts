@@ -1,7 +1,6 @@
 import Graph from "graphology";
 import { Step } from "../step/generic";
 import {
-  GraphConfiguration,
   DEFAULT_GRAPH_CONFIGURATION,
   Traverser,
   Vertex,
@@ -10,6 +9,9 @@ import {
   EdgeMap,
   Values,
   Order,
+  NotImplemented,
+  BaseGraph,
+  GraphConfiguration,
 } from "../types";
 
 // Filter steps
@@ -77,29 +79,24 @@ import { AsStep } from "../step/sideEffect/as";
  * @author Marko A. Rodriguez (http://markorodriguez.com)
  */
 export class GraphTraversal<S, E> implements Iterator<E> {
-  private graph: Graph;
-  private config: GraphConfiguration;
+  private graph: BaseGraph;
   private steps: Array<Step<unknown, unknown>> = [];
   private start: Iterator<Traverser<S>>;
   private target: Iterator<Traverser<E>> | null = null;
 
   public static newEmpty(): GraphTraversal<null, null> {
-    return new GraphTraversal<null, null>(
-      new Graph(),
-      DEFAULT_GRAPH_CONFIGURATION,
-      [new Traverser(null)][Symbol.iterator](),
-    );
+    const graph: BaseGraph = new Graph();
+    graph.mergeAttributes(DEFAULT_GRAPH_CONFIGURATION);
+    return new GraphTraversal<null, null>(graph, [new Traverser(null)][Symbol.iterator]());
   }
 
   constructor(
-    graph: Graph,
-    config: GraphConfiguration,
+    graph: BaseGraph,
     start: Iterator<Traverser<S>>,
     steps: Array<Step<unknown, unknown>> = [],
     newStep?: (gt: GraphTraversal<S, E>) => Step<unknown, E>,
   ) {
     this.graph = graph;
-    this.config = config;
     this.start = start;
     this.steps = newStep ? steps.concat(newStep(this)) : steps;
   }
@@ -118,7 +115,7 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   /**
    * Getter for the graph.
    */
-  public getGraph(): Graph {
+  public getGraph(): BaseGraph {
     return this.graph;
   }
 
@@ -126,7 +123,7 @@ export class GraphTraversal<S, E> implements Iterator<E> {
    * Getter for the configuration.
    */
   public getConfig(): GraphConfiguration {
-    return this.config;
+    return this.graph.getAttributes();
   }
 
   /**
@@ -174,7 +171,7 @@ export class GraphTraversal<S, E> implements Iterator<E> {
    * Add a step to the traversal.
    */
   public addStep<T>(stepBuilder: (gt: GraphTraversal<S, T>) => Step<unknown, T>): GraphTraversal<S, T> {
-    return new GraphTraversal<S, T>(this.graph, this.config, this.start, this.steps, stepBuilder);
+    return new GraphTraversal<S, T>(this.graph, this.start, this.steps, stepBuilder);
   }
 
   /**
@@ -345,5 +342,27 @@ export class GraphTraversal<S, E> implements Iterator<E> {
   }
   public as(name: string): GraphTraversal<S, E> {
     return this.addStep((gt: GraphTraversal<S, E>) => new AsStep(gt, name));
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~ Not yet implemented
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  public store(..._args: any[]): GraphTraversal<S, E> {
+    throw new NotImplemented("store");
+  }
+  public cap(..._args: any[]): GraphTraversal<S, E> {
+    throw new NotImplemented("cap");
+  }
+  public groupCount(..._args: any[]): GraphTraversal<S, E> {
+    throw new NotImplemented("groupCount");
+  }
+  public sack(..._args: any[]): GraphTraversal<S, E> {
+    throw new NotImplemented("sack");
+  }
+  public barrier(..._args: any[]): GraphTraversal<S, E> {
+    throw new NotImplemented("barrier");
+  }
+  public local(..._args: any[]): GraphTraversal<S, E> {
+    throw new NotImplemented("local");
   }
 }

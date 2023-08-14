@@ -1,5 +1,13 @@
 import Graph from "graphology";
-import { Traverser, Vertex, Edge, GraphConfiguration, DEFAULT_GRAPH_CONFIGURATION } from "../types";
+import {
+  Traverser,
+  Vertex,
+  Edge,
+  DEFAULT_GRAPH_CONFIGURATION,
+  NotImplemented,
+  BaseGraph,
+  GraphConfiguration,
+} from "../types";
 import { GraphTraversal } from "./graphTraversal";
 // start steps
 import { AddEStep } from "../step/start/addE";
@@ -26,15 +34,15 @@ import { InjectStep } from "../step/sideEffect/inject";
  * @author Stephen Mallette (http://stephen.genoprime.com)
  */
 export class GraphTraversalSource {
-  private graph: Graph;
-  private config: GraphConfiguration = DEFAULT_GRAPH_CONFIGURATION;
+  private graph: BaseGraph;
 
   constructor(graph: Graph) {
-    this.graph = graph;
+    graph.replaceAttributes(DEFAULT_GRAPH_CONFIGURATION);
+    this.graph = graph as BaseGraph;
   }
 
-  with(key: keyof GraphConfiguration, value: string): this {
-    this.config[key] = value;
+  with(key: keyof GraphConfiguration, value: any): this {
+    this.graph.mergeAttributes({ [key]: value });
     return this;
   }
 
@@ -52,7 +60,6 @@ export class GraphTraversalSource {
     const nodes = (ids.length > 0 ? ids : this.graph.nodes()).map((id: string) => new Traverser(id));
     return new GraphTraversal<string, Vertex>(
       this.graph,
-      this.config,
       nodes[Symbol.iterator](),
       [],
       (gt: GraphTraversal<string, Vertex>) => new VStep(gt),
@@ -65,7 +72,6 @@ export class GraphTraversalSource {
   addV(): GraphTraversal<null | string, Vertex> {
     return new GraphTraversal<null | string, Vertex>(
       this.graph,
-      this.config,
       this.emptyIterator(true),
       [],
       (gt: GraphTraversal<null | string, Vertex>) => new AddVStep(gt),
@@ -79,7 +85,6 @@ export class GraphTraversalSource {
     const edges = (ids.length > 0 ? ids : this.graph.edges()).map((id: string) => new Traverser(id));
     return new GraphTraversal<string, Edge>(
       this.graph,
-      this.config,
       edges[Symbol.iterator](),
       [],
       (gt: GraphTraversal<string, Edge>) => new EStep(gt),
@@ -92,7 +97,6 @@ export class GraphTraversalSource {
   addE(): GraphTraversal<null | string, Edge> {
     return new GraphTraversal<null | string, Edge>(
       this.graph,
-      this.config,
       this.emptyIterator(true),
       [],
       (gt: GraphTraversal<null | string, Edge>) => new AddEStep(gt),
@@ -102,11 +106,26 @@ export class GraphTraversalSource {
   inject<T>(...items: Array<T>): GraphTraversal<null, T> {
     return new GraphTraversal<null, T>(
       this.graph,
-      this.config,
       this.emptyIterator(),
       [],
       (gt: GraphTraversal<null, T>) => new InjectStep<T>(gt, items),
     );
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~ Not yet implemented
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  withBulk(..._args: any[]): this {
+    throw new NotImplemented("withBulk");
+  }
+  withSack(..._args: any[]): this {
+    throw new NotImplemented("withSack");
+  }
+  withSideEffect(..._args: any[]): this {
+    throw new NotImplemented("withSideEffect");
+  }
+  io(..._args: any[]): this {
+    throw new NotImplemented("io");
   }
 
   private emptyIterator(withOneNummTraverser = false): Iterator<Traverser<null>> {
