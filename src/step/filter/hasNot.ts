@@ -1,5 +1,5 @@
-import { Edge, Vertex, Values, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Edge, Traverser, Values, Vertex } from "../../types";
 import { FilterStep } from "./generic";
 
 /**
@@ -15,7 +15,7 @@ export class HasNotStep extends FilterStep<Edge | Vertex | Values> {
           : traverser.value;
 
       let keep = true;
-      keys.forEach(key => {
+      keys.forEach((key) => {
         if (key in value) {
           keep = false;
         }

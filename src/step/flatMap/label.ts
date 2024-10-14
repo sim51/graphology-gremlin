@@ -1,5 +1,5 @@
-import { Edge, Vertex, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Edge, Traverser, Vertex } from "../../types";
 import { FlatMapStep } from "./generic";
 
 /**
@@ -8,14 +8,9 @@ import { FlatMapStep } from "./generic";
  */
 export class LabelStep extends FlatMapStep<Edge | Vertex, string> {
   constructor(traversal: GraphTraversal<unknown, string>) {
-    super(
-      "label",
-      traversal,
-      (traverser: Traverser<Edge | Vertex>): Iterator<string> => {
-        const labels: Array<string> =
-          traverser.value instanceof Vertex ? traverser.value.labels : [traverser.value.type];
-        return labels[Symbol.iterator]();
-      },
-    );
+    super("label", traversal, (traverser: Traverser<Edge | Vertex>): Iterator<string> => {
+      const labels: Array<string> = traverser.value instanceof Vertex ? traverser.value.labels : [traverser.value.type];
+      return labels[Symbol.iterator]();
+    });
   }
 }

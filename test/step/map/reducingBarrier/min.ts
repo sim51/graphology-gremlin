@@ -1,31 +1,18 @@
-import assert from "assert";
-import { generateRandomGraph } from "../../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../../src/index";
+import { generateRandomGraph } from "../../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - Map - reducingBarrier - min", function() {
-  it("should work on identifier", () => {
+describe("Step - Map - reducingBarrier - min", function () {
+  test("should work on identifier", () => {
     const g = new GraphTraversalSource(graph);
-    assert.equal(
-      g
-        .V()
-        .id()
-        .min()
-        .next().value,
-      0,
-    );
+    expect(g.V().id().min().next().value).toEqual(0);
   });
 
-  it("should work on property", () => {
+  test("should work on property", () => {
     const g = new GraphTraversalSource(graph);
-    assert.equal(
-      g
-        .V()
-        .values("age")
-        .min()
-        .next().value >= 0,
-      true,
-    );
+    expect(g.V().values("age").min().next().value).greaterThanOrEqual(0);
   });
 });

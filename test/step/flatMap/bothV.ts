@@ -1,16 +1,14 @@
-import assert from "assert";
-import { generateRandomGraph } from "../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../src/index";
+import { generateRandomGraph } from "../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - FlatMap - bothV", function() {
-  it("should work", () => {
+describe("Step - FlatMap - bothV", function () {
+  test("should work", () => {
     const g = new GraphTraversalSource(graph);
-    const result = g
-      .V()
-      .bothV()
-      .toList();
-    assert.equal(result.length, 2 * graph.size);
+    const result = g.V().bothV().toList();
+    expect(result.length).toEqual(2 * graph.size);
   });
 });

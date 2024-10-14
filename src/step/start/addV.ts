@@ -14,13 +14,9 @@ export class AddVStep extends MapStep<string | null, Vertex> {
    * Default constructor.
    */
   constructor(traversal: GraphTraversal<unknown, Vertex>) {
-    super(
-      "AddV",
-      traversal,
-      (): Vertex => {
-        const node = traversal.getGraph().addNode(new Date().getTime());
-        return new Vertex(node);
-      },
-    );
+    super("AddV", traversal, (): Vertex => {
+      const node = traversal.getGraph().addNode(new Date().getTime());
+      return new Vertex(node);
+    });
   }
 }

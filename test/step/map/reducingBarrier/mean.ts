@@ -1,31 +1,20 @@
-import assert from "assert";
-import { generateRandomGraph } from "../../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../../src/index";
+import { generateRandomGraph } from "../../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - Map - reducingBarrier - mean", function() {
-  it("should work on identifier", () => {
+describe("Step - Map - reducingBarrier - mean", function () {
+  test("should work on identifier", () => {
     const g = new GraphTraversalSource(graph);
-    assert.equal(
-      g
-        .V()
-        .id()
-        .mean()
-        .next().value,
+    expect(g.V().id().mean().next().value).toEqual(
       49.5, // mean of 0,1,...,99
     );
   });
 
-  it("should work on property", () => {
+  test("should work on property", () => {
     const g = new GraphTraversalSource(graph);
-    assert.equal(
-      g
-        .V()
-        .values("age")
-        .mean()
-        .next().value > 0,
-      true,
-    );
+    expect(g.V().values("age").mean().next().value).greaterThan(0);
   });
 });

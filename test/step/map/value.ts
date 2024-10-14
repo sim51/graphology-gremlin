@@ -1,14 +1,15 @@
-import assert from "assert";
-import { generateRandomGraph } from "../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../src/index";
+import { generateRandomGraph } from "../../utils";
 
 const graph = generateRandomGraph();
 
 describe("Step - Map - value", function () {
-  it("should work", () => {
+  test("should work", () => {
     const g = new GraphTraversalSource(graph);
     const result = g.V("1").properties().value().toList();
 
-    assert.equal(result.length, 4);
+    expect(result.length).toEqual(4);
   });
 });

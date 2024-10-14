@@ -14,5 +14,5 @@ export class CountStep extends ReducingBarrierStep<unknown, number> {
 }
 
 export const count = <T>(): GraphTraversal<T, number> => {
-  return (GraphTraversal.newEmpty().count() as unknown) as GraphTraversal<T, number>;
+  return GraphTraversal.newEmpty().count() as unknown as GraphTraversal<T, number>;
 };

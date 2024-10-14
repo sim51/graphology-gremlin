@@ -1,4 +1,5 @@
 import { pick } from "lodash";
+
 import { Values } from "./common";
 
 export type VertexMap = { id: string; label: Array<string> } & Values;

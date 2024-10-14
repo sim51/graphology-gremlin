@@ -1,6 +1,6 @@
 import { GraphTraversal } from "../../../traversal/graphTraversal";
+import { Edge, Values, Vertex } from "../../../types";
 import { ReducingBarrierStep } from "./generic";
-import { Edge, Vertex, Values } from "../../../types";
 
 /**
  * Group the traversal values
@@ -26,10 +26,10 @@ export class GroupStep<T> extends ReducingBarrierStep<T, { [key: string]: Array<
         // value should be map ?
         else {
           if (
-            ((value as unknown) as Values)[this.keyGroupping] !== null &&
-            ((value as unknown) as Values)[this.keyGroupping] !== undefined
+            (value as unknown as Values)[this.keyGroupping] !== null &&
+            (value as unknown as Values)[this.keyGroupping] !== undefined
           )
-            keys = [String(((value as unknown) as Values)[this.keyGroupping])];
+            keys = [String((value as unknown as Values)[this.keyGroupping])];
         }
       }
 

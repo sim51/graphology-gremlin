@@ -1,58 +1,28 @@
-import assert from "assert";
-import { generateRandomGraph } from "../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../src/index";
+import { generateRandomGraph } from "../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - Map - identity", function() {
-  it("should work on vertex", () => {
+describe("Step - Map - identity", function () {
+  test("should work on vertex", () => {
     const g = new GraphTraversalSource(graph);
-    assert.deepEqual(
-      g
-        .V()
-        .identity()
-        .toList(),
-      g.V().toList(),
-    );
+    expect(g.V().identity().toList()).toEqual(g.V().toList());
   });
 
-  it("should work on edge", () => {
+  test("should work on edge", () => {
     const g = new GraphTraversalSource(graph);
-    assert.deepEqual(
-      g
-        .E()
-        .identity()
-        .toList(),
-      g.E().toList(),
-    );
+    expect(g.E().identity().toList()).toEqual(g.E().toList());
   });
 
-  it("should work on id", () => {
+  test("should work on id", () => {
     const g = new GraphTraversalSource(graph);
-    assert.deepEqual(
-      g
-        .V()
-        .id()
-        .toList(),
-      g
-        .V()
-        .id()
-        .toList(),
-    );
+    expect(g.V().id().toList()).toEqual(g.V().id().toList());
   });
 
-  it("should work on object", () => {
+  test("should work on object", () => {
     const g = new GraphTraversalSource(graph);
-    assert.deepEqual(
-      g
-        .V()
-        .valueMap()
-        .identity()
-        .toList(),
-      g
-        .V()
-        .valueMap()
-        .toList(),
-    );
+    expect(g.V().valueMap().identity().toList()).toEqual(g.V().valueMap().toList());
   });
 });

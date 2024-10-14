@@ -1,7 +1,7 @@
 {
   "name": "graphology-gremlin",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.0-alpha1",
+  "description": "Gremlin plugin for graphlogy",
   "license": "MIT",
   "author": "Benoit Simard",
   "keywords": [
@@ -9,42 +9,47 @@
     "graph",
     "graphlogy"
   ],
+  "type": "module",
   "main": "./lib/graphology-gremlin.umd.min.js",
   "module": "./lib/graphology-gremlin.esm.min.js",
-  "typings": "./lib/types/",
+  "typings": "./lib/types/index.d.ts",
   "exports": {
-    "./": "./lib/graphology-gremlin.esm.min.js"
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/react-sigma_core.esm.min.js"
+    }
   },
   "scripts": {
     "clean": "rimraf lib/ coverage .nyc_output .rollup_cache",
     "compile": "rollup -c",
     "build": "npm run clean && npm run compile",
     "start": "rollup -c -w",
-    "test": "nyc --reporter=html --reporter=text mocha --exit -r ts-node/register ./test/**/*.ts"
+    "test": "vitest"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-beta.0",
-    "@rbnlffl/rollup-plugin-eslint": "^3.0.0",
-    "@rollup/plugin-typescript": "^8.3.1",
-    "@types/lodash": "^4.14.179",
-    "@types/mocha": "^9.1.0",
-    "@types/object-hash": "^2.2.1",
-    "@typescript-eslint/eslint-plugin": "^5.14.0",
-    "@typescript-eslint/parser": "^5.14.0",
-    "eslint": "^8.11.0",
+    "@faker-js/faker": "^9.0.3",
+    "@rollup/plugin-eslint": "^9.0.5",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/lodash": "^4.17.10",
+    "@types/mocha": "^10.0.9",
+    "@types/object-hash": "^3.0.6",
+    "@typescript-eslint/eslint-plugin": "^8.9.0",
+    "@typescript-eslint/parser": "^8.9.0",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "graphology": "^0.25.4",
     "graphology-generators": "^0.11.2",
-    "graphology-types": "^0.24.3",
-    "graphology": "^0.24.1",
-    "mocha": "^8.3.2",
-    "nyc": "^15.1.0",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.68.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.2"
+    "graphology-types": "^0.24.7",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.24.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
   },
   "peerDependencies": {
-    "graphology": "^0.24.1"
+    "graphology": "^0.25.4"
   },
   "dependencies": {
     "lodash": "^4.17.21",

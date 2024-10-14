@@ -1,5 +1,5 @@
-import { Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Traverser } from "../../types";
 import { FlatMapStep } from "./generic";
 
 /**
@@ -11,12 +11,8 @@ export class UnfoldStep<T> extends FlatMapStep<Array<T>, T> {
    * Default constructor.
    */
   constructor(traversal: GraphTraversal<unknown, T>) {
-    super(
-      "unfold",
-      traversal,
-      (traverser: Traverser<Array<T>>): Iterator<T> => {
-        return traverser.value[Symbol.iterator]();
-      },
-    );
+    super("unfold", traversal, (traverser: Traverser<Array<T>>): Iterator<T> => {
+      return traverser.value[Symbol.iterator]();
+    });
   }
 }

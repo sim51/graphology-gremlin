@@ -1,31 +1,26 @@
-import assert from "assert";
-import { generateRandomGraph } from "../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../src/index";
+import { generateRandomGraph } from "../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - Map - id", function() {
-  describe("Vertex", function() {
-    it("should work", () => {
+describe("Step - Map - id", function () {
+  describe("Vertex", function () {
+    test("should work", () => {
       const g = new GraphTraversalSource(graph);
-      const result = g
-        .V()
-        .id()
-        .toList();
+      const result = g.V().id().toList();
 
-      assert.deepEqual(result, graph.nodes());
+      expect(result).toEqual(graph.nodes());
     });
   });
 
-  describe("Edge", function() {
-    it("should work", () => {
+  describe("Edge", function () {
+    test("should work", () => {
       const g = new GraphTraversalSource(graph);
-      const result = g
-        .E()
-        .id()
-        .toList();
+      const result = g.E().id().toList();
 
-      assert.deepEqual(result, graph.edges());
+      expect(result).toEqual(graph.edges());
     });
   });
 });

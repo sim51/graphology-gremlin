@@ -1,16 +1,4 @@
 import Graph from "graphology";
-import { Step } from "../step/generic";
-import {
-  GraphConfiguration,
-  DEFAULT_GRAPH_CONFIGURATION,
-  Traverser,
-  Vertex,
-  VertexMap,
-  Edge,
-  EdgeMap,
-  Values,
-  Order,
-} from "../types";
 
 // Filter steps
 import { DedupStep } from "../step/filter/dedup";
@@ -21,7 +9,6 @@ import { HasNotStep } from "../step/filter/hasNot";
 import { IsStep } from "../step/filter/is";
 import { RangeStep } from "../step/filter/range";
 import { TailStep } from "../step/filter/tail";
-
 // FlatMap steps
 import { BothStep } from "../step/flatMap/both";
 import { BothEStep } from "../step/flatMap/bothE";
@@ -30,23 +17,21 @@ import { InStep } from "../step/flatMap/in";
 import { InEStep } from "../step/flatMap/inE";
 import { InVStep } from "../step/flatMap/inV";
 import { LabelStep } from "../step/flatMap/label";
+import { OtherVStep } from "../step/flatMap/otherV";
 import { OutStep } from "../step/flatMap/out";
 import { OutEStep } from "../step/flatMap/outE";
 import { OutVStep } from "../step/flatMap/outV";
-import { OtherVStep } from "../step/flatMap/otherV";
 import { PropertiesStep } from "../step/flatMap/properties";
 import { UnfoldStep } from "../step/flatMap/unfold";
 import { ValuesStep } from "../step/flatMap/values";
-
+import { Step } from "../step/generic";
+// Map collecting barrier steps
+import { OrderStep } from "../step/map/collectingBarrier/order";
 // Map steps
 import { ElementMapStep } from "../step/map/elementMap";
 import { IdStep } from "../step/map/id";
 import { IdentityStep } from "../step/map/identity";
 import { KeyStep } from "../step/map/key";
-import { SelectStep } from "../step/map/select";
-import { ValueStep } from "../step/map/value";
-import { ValueMapStep } from "../step/map/valueMap";
-
 // Map reducing barrier steps
 import { CountStep } from "../step/map/reducingBarrier/count";
 import { FoldStep } from "../step/map/reducingBarrier/fold";
@@ -55,13 +40,23 @@ import { MaxStep } from "../step/map/reducingBarrier/max";
 import { MeanStep } from "../step/map/reducingBarrier/mean";
 import { MinStep } from "../step/map/reducingBarrier/min";
 import { SumStep } from "../step/map/reducingBarrier/sum";
-
-// Map collecting barrier steps
-import { OrderStep } from "../step/map/collectingBarrier/order";
-
+import { SelectStep } from "../step/map/select";
+import { ValueStep } from "../step/map/value";
+import { ValueMapStep } from "../step/map/valueMap";
+import { AsStep } from "../step/sideEffect/as";
 // Side effect steps
 import { InjectStep } from "../step/sideEffect/inject";
-import { AsStep } from "../step/sideEffect/as";
+import {
+  DEFAULT_GRAPH_CONFIGURATION,
+  Edge,
+  EdgeMap,
+  GraphConfiguration,
+  Order,
+  Traverser,
+  Values,
+  Vertex,
+  VertexMap,
+} from "../types";
 
 /**
  * Extract from https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/Traversal.java

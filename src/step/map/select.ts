@@ -1,5 +1,5 @@
-import { Values, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Traverser, Values } from "../../types";
 import { MapStep } from "./generic";
 
 /**
@@ -8,16 +8,12 @@ import { MapStep } from "./generic";
  */
 export class SelectStep extends MapStep<unknown, Values> {
   constructor(traversal: GraphTraversal<unknown, Values>, names: Array<string>) {
-    super(
-      "selectMap",
-      traversal,
-      (traverser: Traverser<unknown>): Values => {
-        const result: Values = {};
-        names.forEach((name: string) => {
-          result[name] = traverser.getAs(name);
-        });
-        return result;
-      },
-    );
+    super("selectMap", traversal, (traverser: Traverser<unknown>): Values => {
+      const result: Values = {};
+      names.forEach((name: string) => {
+        result[name] = traverser.getAs(name);
+      });
+      return result;
+    });
   }
 }

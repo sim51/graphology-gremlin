@@ -1,5 +1,5 @@
-import { Vertex, Edge, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Edge, Traverser, Vertex } from "../../types";
 import { FilterStep } from "./generic";
 
 /**
@@ -9,7 +9,7 @@ export class HasLabelStep extends FilterStep<Vertex | Edge> {
   constructor(traversal: GraphTraversal<unknown, Vertex | Edge>, labels: Array<string>) {
     super("hasLabel", traversal, (traverser: Traverser<Vertex | Edge>): boolean => {
       if (traverser.value instanceof Vertex) {
-        return traverser.value.labels.some(label => labels.includes(label));
+        return traverser.value.labels.some((label) => labels.includes(label));
       }
       if (traverser.value instanceof Edge) {
         return labels.includes(traverser.value.type);

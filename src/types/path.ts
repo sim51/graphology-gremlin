@@ -1,5 +1,5 @@
-import { Vertex } from "./vertex";
 import { Edge } from "./edge";
+import { Vertex } from "./vertex";
 
 export interface PathSegment {
   source: Vertex;

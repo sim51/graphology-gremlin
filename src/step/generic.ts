@@ -1,5 +1,6 @@
 import { GraphTraversal } from "../traversal/graphTraversal";
-import { Traverser, Order } from "../types";
+import { Order, Traverser } from "../types";
+
 /**
  * Extract of https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/Step.java
  *

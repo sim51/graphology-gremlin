@@ -1,6 +1,6 @@
+import { faker } from "@faker-js/faker";
 import Graph, { MultiDirectedGraph } from "graphology";
 import { erdosRenyi } from "graphology-generators/random";
-import faker from "@faker-js/faker";
 
 const NODE_LABELS = ["Man", "Woman", "Other"];
 const EDGE_TYPES = ["KNOWS", "FRIEND_OF", "COLLEAGUE_OF"];
@@ -16,7 +16,7 @@ export function generateRandomGraph(): Graph {
       "@labels": ["Person", randomValue(NODE_LABELS)],
       age: Math.floor(Math.random() * 100),
       email: faker.internet.email(),
-      name: faker.name.findName(),
+      name: faker.person.fullName(),
       valid: faker.datatype.boolean(),
     });
   });

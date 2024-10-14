@@ -2,8 +2,8 @@
   "extends": "./tsconfig.base.json",
   "include": ["./src"],
   "compilerOptions": {
-    "declarationDir": "./types",
-    "outDir": "./esm",
+    "declarationDir": "./lib/types",
+    "outDir": "./lib",
     "rootDir": "./src"
   }
 }

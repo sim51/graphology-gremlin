@@ -1,39 +1,34 @@
-import assert from "assert";
 import { omit } from "lodash";
-import { generateRandomGraph } from "../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../src/index";
-import { Vertex, Edge } from "../../../src/types";
+import { Edge, Vertex } from "../../../src/types";
+import { generateRandomGraph } from "../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - Map - elementMap", function() {
-  it("should work on Vertex", () => {
+describe("Step - Map - elementMap", function () {
+  test("should work on Vertex", () => {
     const g = new GraphTraversalSource(graph);
-    const result = g
-      .V()
-      .elementMap()
-      .toList();
+    const result = g.V().elementMap().toList();
 
     const id = graph.nodes()[0];
     const attrs = graph.getNodeAttributes(id);
     const element = new Vertex(id, attrs["@labels"], omit(attrs, ["@labels"]));
 
-    assert.equal(result.length, graph.order);
-    assert.deepEqual(result[0], element.toMap());
+    expect(result.length).toEqual(graph.order);
+    expect(result[0]).toEqual(element.toMap());
   });
 
-  it("should work on Edge", () => {
+  test("should work on Edge", () => {
     const g = new GraphTraversalSource(graph);
-    const result = g
-      .E()
-      .elementMap()
-      .toList();
+    const result = g.E().elementMap().toList();
 
     const id = graph.edges()[0];
     const attrs = graph.getEdgeAttributes(id);
     const element = new Edge(id, attrs["@type"], omit(attrs, ["@type"]));
 
-    assert.equal(result.length, graph.size);
-    assert.deepEqual(result[0], element.toMap());
+    expect(result.length).toEqual(graph.size);
+    expect(result[0]).toEqual(element.toMap());
   });
 });

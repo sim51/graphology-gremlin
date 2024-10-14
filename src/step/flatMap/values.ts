@@ -1,6 +1,7 @@
 import { pick, valuesIn } from "lodash";
-import { Edge, Vertex, Values, Traverser } from "../../types";
+
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Edge, Traverser, Values, Vertex } from "../../types";
 import { FlatMapStep } from "./generic";
 
 /**
@@ -12,18 +13,14 @@ export class ValuesStep extends FlatMapStep<Edge | Vertex | Values, unknown> {
    * Default constructor.
    */
   constructor(traversal: GraphTraversal<unknown, unknown>, properties: Array<string>) {
-    super(
-      "values",
-      traversal,
-      (traverser: Traverser<Edge | Vertex | Values>): Iterator<unknown> => {
-        const value: Values =
-          traverser.value instanceof Vertex || traverser.value instanceof Edge
-            ? traverser.value.properties
-            : traverser.value;
+    super("values", traversal, (traverser: Traverser<Edge | Vertex | Values>): Iterator<unknown> => {
+      const value: Values =
+        traverser.value instanceof Vertex || traverser.value instanceof Edge
+          ? traverser.value.properties
+          : traverser.value;
 
-        const filteredValue = properties.length > 0 ? pick(value, properties) : value;
-        return valuesIn(filteredValue)[Symbol.iterator]();
-      },
-    );
+      const filteredValue = properties.length > 0 ? pick(value, properties) : value;
+      return valuesIn(filteredValue)[Symbol.iterator]();
+    });
   }
 }

@@ -1,4 +1,5 @@
 import { orderBy } from "lodash";
+
 import { GraphTraversal } from "../../../traversal/graphTraversal";
 import { Order, Traverser } from "../../../types";
 import { CollectingBarrierStep } from "./generic";
@@ -12,17 +13,13 @@ export class OrderStep<T> extends CollectingBarrierStep<T, T> {
   orders: Array<"asc" | "desc"> = [];
 
   constructor(traversal: GraphTraversal<unknown, T>) {
-    super(
-      "order",
-      traversal,
-      (values: Array<Traverser<T>>): Array<Traverser<T>> => {
-        if (this.iteratees.length > 0) {
-          return orderBy(values, this.iteratees, this.orders);
-        } else {
-          return orderBy(values, "value");
-        }
-      },
-    );
+    super("order", traversal, (values: Array<Traverser<T>>): Array<Traverser<T>> => {
+      if (this.iteratees.length > 0) {
+        return orderBy(values, this.iteratees, this.orders);
+      } else {
+        return orderBy(values, "value");
+      }
+    });
   }
 
   by(name?: string, order?: Order | string): void {

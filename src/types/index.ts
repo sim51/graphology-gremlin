@@ -1,9 +1,9 @@
-import { Values, Order } from "./common";
+import { Order, Values } from "./common";
 import { Edge, EdgeMap } from "./edge";
-import { Vertex, VertexMap } from "./vertex";
+import { DEFAULT_GRAPH_CONFIGURATION, GraphConfiguration } from "./graphConfiguration";
 import { Path, PathSegment } from "./path";
 import { Traverser } from "./traverser";
-import { GraphConfiguration, DEFAULT_GRAPH_CONFIGURATION } from "./graphConfiguration";
+import { Vertex, VertexMap } from "./vertex";
 
 export {
   Edge,

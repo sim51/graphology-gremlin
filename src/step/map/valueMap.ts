@@ -1,6 +1,7 @@
 import { pick } from "lodash";
-import { Edge, Vertex, Values, Traverser } from "../../types";
+
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Edge, Traverser, Values, Vertex } from "../../types";
 import { MapStep } from "./generic";
 
 /**
@@ -9,16 +10,12 @@ import { MapStep } from "./generic";
  */
 export class ValueMapStep extends MapStep<Edge | Vertex | Values, Values> {
   constructor(traversal: GraphTraversal<unknown, Values>, properties: Array<string>) {
-    super(
-      "valueMap",
-      traversal,
-      (traverser: Traverser<Edge | Vertex | Values>): Values => {
-        const value: Values =
-          traverser.value instanceof Vertex || traverser.value instanceof Edge
-            ? traverser.value.properties
-            : traverser.value;
-        return properties.length > 0 ? pick(value, properties) : value;
-      },
-    );
+    super("valueMap", traversal, (traverser: Traverser<Edge | Vertex | Values>): Values => {
+      const value: Values =
+        traverser.value instanceof Vertex || traverser.value instanceof Edge
+          ? traverser.value.properties
+          : traverser.value;
+      return properties.length > 0 ? pick(value, properties) : value;
+    });
   }
 }

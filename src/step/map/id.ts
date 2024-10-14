@@ -1,5 +1,5 @@
-import { Edge, Vertex, Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Edge, Traverser, Vertex } from "../../types";
 import { MapStep } from "./generic";
 
 /**

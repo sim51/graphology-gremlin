@@ -15,13 +15,9 @@ export class AddEStep extends MapStep<null, Edge> {
    * Default constructor.
    */
   constructor(traversal: GraphTraversal<unknown, Edge>) {
-    super(
-      "AddE",
-      traversal,
-      (): Edge => {
-        // TODO: use an ID generator
-        return new Edge(`${new Date().getTime()}`);
-      },
-    );
+    super("AddE", traversal, (): Edge => {
+      // TODO: use an ID generator
+      return new Edge(`${new Date().getTime()}`);
+    });
   }
 }

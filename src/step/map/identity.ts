@@ -1,5 +1,5 @@
-import { Traverser } from "../../types";
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Traverser } from "../../types";
 import { MapStep } from "./generic";
 
 /**
@@ -8,12 +8,8 @@ import { MapStep } from "./generic";
  */
 export class IdentityStep<T> extends MapStep<T, T> {
   constructor(traversal: GraphTraversal<unknown, T>) {
-    super(
-      "identity",
-      traversal,
-      (traverser: Traverser<T>): T => {
-        return traverser.value;
-      },
-    );
+    super("identity", traversal, (traverser: Traverser<T>): T => {
+      return traverser.value;
+    });
   }
 }

@@ -1,6 +1,7 @@
 import hash from "object-hash";
-import { Traverser } from "../../types";
+
 import { GraphTraversal } from "../../traversal/graphTraversal";
+import { Traverser } from "../../types";
 import { FilterStep } from "./generic";
 
 /**

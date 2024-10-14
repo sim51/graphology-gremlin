@@ -3,11 +3,15 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+   "eslint:recommended", // ESLint recommended rules
+    "plugin:@typescript-eslint/recommended", // TypeScript recommended rules
+    "plugin:@typescript-eslint/eslint-recommended", // ESLint overrides for TypeScript
+    "prettier", // Prettier rules
+    "plugin:prettier/recommended" // Prettier plugin integration
   ],
+  "ignorePatterns":["*.d.ts"],
   "rules": {
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "no-unexpected-multiline": "off"
   }
 }

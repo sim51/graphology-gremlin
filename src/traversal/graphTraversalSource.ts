@@ -1,12 +1,13 @@
 import Graph from "graphology";
-import { Traverser, Vertex, Edge, GraphConfiguration, DEFAULT_GRAPH_CONFIGURATION } from "../types";
-import { GraphTraversal } from "./graphTraversal";
+
+import { InjectStep } from "../step/sideEffect/inject";
+import { EStep } from "../step/start/E";
+import { VStep } from "../step/start/V";
 // start steps
 import { AddEStep } from "../step/start/addE";
 import { AddVStep } from "../step/start/addV";
-import { EStep } from "../step/start/E";
-import { VStep } from "../step/start/V";
-import { InjectStep } from "../step/sideEffect/inject";
+import { DEFAULT_GRAPH_CONFIGURATION, Edge, GraphConfiguration, Traverser, Vertex } from "../types";
+import { GraphTraversal } from "./graphTraversal";
 
 /**
  * Extract of https://github.com/apache/tinkerpop/blob/master/gremlin-core/src/main/java/org/apache/tinkerpop/gremlin/process/traversal/TraversalSource.java

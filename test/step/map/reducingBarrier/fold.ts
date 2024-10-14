@@ -1,39 +1,30 @@
-import assert from "assert";
-import { generateRandomGraph } from "../../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../../src/index";
+import { generateRandomGraph } from "../../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - Map - reducingBarrier - fold", function() {
-  it("should work on vertex", () => {
+describe("Step - Map - reducingBarrier - fold", function () {
+  test("should work on vertex", () => {
     const g = new GraphTraversalSource(graph);
-    const result = g
-      .V()
-      .fold()
-      .next().value;
+    const result = g.V().fold().next().value;
 
-    assert.equal(result instanceof Array, true);
-    assert.equal(result.length, graph.order);
+    expect(result instanceof Array).toBeTruthy();
+    expect(result.length).toEqual(graph.order);
   });
 
-  it("should work on edge", () => {
+  test("should work on edge", () => {
     const g = new GraphTraversalSource(graph);
-    const result = g
-      .E()
-      .fold()
-      .next().value;
+    const result = g.E().fold().next().value;
 
-    assert.equal(result instanceof Array, true);
-    assert.equal(result.length, graph.size);
+    expect(result instanceof Array).toBeTruthy();
+    expect(result.length).toEqual(graph.size);
   });
 
-  it("should work on identifier", () => {
+  test("should work on identifier", () => {
     const g = new GraphTraversalSource(graph);
-    const result = g
-      .V()
-      .id()
-      .fold()
-      .next().value;
-    assert.deepEqual(result, graph.nodes());
+    const result = g.V().id().fold().next().value;
+    expect(result).toEqual(graph.nodes());
   });
 });

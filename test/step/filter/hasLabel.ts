@@ -1,91 +1,53 @@
-import assert from "assert";
-import { generateRandomGraph } from "../../utils";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../src/index";
+import { generateRandomGraph } from "../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - Filter - hasLabel", function() {
-  describe("Vertex", function() {
-    it("with one value should work", () => {
+describe("Step - Filter - hasLabel", function () {
+  describe("Vertex", function () {
+    test("with one value should work", () => {
       const g = new GraphTraversalSource(graph);
-      const nbPerson = g
-        .V()
-        .hasLabel("Person")
-        .toList().length;
-      assert.equal(nbPerson, 100);
+      const nbPerson = g.V().hasLabel("Person").toList().length;
+      expect(nbPerson).toEqual(100);
 
-      const nbMan = g
-        .V()
-        .hasLabel("Man")
-        .toList().length;
-      const nbWoman = g
-        .V()
-        .hasLabel("Woman")
-        .toList().length;
-      const nbOther = g
-        .V()
-        .hasLabel("Other")
-        .toList().length;
-      assert.equal(nbMan + nbWoman + nbOther, 100);
+      const nbMan = g.V().hasLabel("Man").toList().length;
+      const nbWoman = g.V().hasLabel("Woman").toList().length;
+      const nbOther = g.V().hasLabel("Other").toList().length;
+      expect(nbMan + nbWoman + nbOther).toEqual(100);
     });
 
-    it("with multiple value should work", () => {
+    test("with multiple value should work", () => {
       const g = new GraphTraversalSource(graph);
-      const nbPerson = g
-        .V()
-        .hasLabel("Man", "Woman", "Other")
-        .toList().length;
-      assert.equal(nbPerson, 100);
+      const nbPerson = g.V().hasLabel("Man", "Woman", "Other").toList().length;
+      expect(nbPerson).toEqual(100);
     });
 
-    it("without value should returns 0 result", () => {
+    test("without value should returns 0 result", () => {
       const g = new GraphTraversalSource(graph);
-      assert.equal(
-        g
-          .V()
-          .hasLabel()
-          .toList().length,
-        0,
-      );
+      expect(g.V().hasLabel().toList().length).toEqual(0);
     });
   });
-  describe("Edge", function() {
-    it("with one value should work", () => {
+  describe("Edge", function () {
+    test("with one value should work", () => {
       const g = new GraphTraversalSource(graph);
-      const nbKnow = g
-        .E()
-        .hasLabel("KNOWS")
-        .toList().length;
-      const nbFriend = g
-        .E()
-        .hasLabel("FRIEND_OF")
-        .toList().length;
-      const nbColleague = g
-        .E()
-        .hasLabel("COLLEAGUE_OF")
-        .toList().length;
+      const nbKnow = g.E().hasLabel("KNOWS").toList().length;
+      const nbFriend = g.E().hasLabel("FRIEND_OF").toList().length;
+      const nbColleague = g.E().hasLabel("COLLEAGUE_OF").toList().length;
 
-      assert.equal(nbKnow + nbFriend + nbColleague, graph.size);
+      expect(nbKnow + nbFriend + nbColleague).toEqual(graph.size);
     });
 
-    it("with multiple values should work", () => {
+    test("with multiple values should work", () => {
       const g = new GraphTraversalSource(graph);
-      const nbEdges = g
-        .E()
-        .hasLabel("KNOWS", "FRIEND_OF", "COLLEAGUE_OF")
-        .toList().length;
-      assert.equal(nbEdges, graph.size);
+      const nbEdges = g.E().hasLabel("KNOWS", "FRIEND_OF", "COLLEAGUE_OF").toList().length;
+      expect(nbEdges).toEqual(graph.size);
     });
 
-    it("without value should returns 0 result", () => {
+    test("without value should returns 0 result", () => {
       const g = new GraphTraversalSource(graph);
-      assert.equal(
-        g
-          .E()
-          .hasLabel()
-          .toList().length,
-        0,
-      );
+      expect(g.E().hasLabel().toList().length).toEqual(0);
     });
   });
 });

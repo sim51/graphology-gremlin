@@ -1,159 +1,109 @@
-import assert from "assert";
 import { omit } from "lodash";
-import { generateRandomGraph } from "../../utils";
-import { Vertex, Edge, Values } from "../../../src/types";
+import { describe, expect, test } from "vitest";
+
 import { GraphTraversalSource } from "../../../src/index";
+import { Edge, Values, Vertex } from "../../../src/types";
+import { generateRandomGraph } from "../../utils";
 
 const graph = generateRandomGraph();
 
-describe("Step - Filter - hasKey", function() {
-  describe("Vertex", function() {
-    it("should work", () => {
+describe("Step - Filter - hasKey", function () {
+  describe("Vertex", function () {
+    test("should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
-      const result = g
-        .V()
-        .hasId(id)
-        .hasKey("name")
-        .toList()[0] as Vertex;
-      assert.deepEqual(result.properties, omit(graph.getNodeAttributes(id), ["@labels"]));
+      const result = g.V().hasId(id).hasKey("name").toList()[0] as Vertex;
+      expect(result.properties).toEqual(omit(graph.getNodeAttributes(id), ["@labels"]));
     });
 
-    it("with values should work", () => {
+    test("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
-      const result = g
-        .V()
-        .hasId(id)
-        .hasKey("name", "email", "valid")
-        .toList()[0] as Vertex;
-      assert.deepEqual(result.properties, omit(graph.getNodeAttributes(id), ["@labels"]));
+      const result = g.V().hasId(id).hasKey("name", "email", "valid").toList()[0] as Vertex;
+      expect(result.properties).toEqual(omit(graph.getNodeAttributes(id), ["@labels"]));
     });
 
-    it("with non-existing key should work", () => {
+    test("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
-      const result = g
-        .V()
-        .hasId(id)
-        .hasKey("azertyuiop")
-        .toList();
+      const result = g.V().hasId(id).hasKey("azertyuiop").toList();
 
-      assert.equal(result.length, 0);
+      expect(result.length).toEqual(0);
     });
 
-    it("with values with non-existing key should work", () => {
+    test("with values with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
-      const result = g
-        .V()
-        .hasId(id)
-        .hasKey("name", "email", "valid", "azertyuiop")
-        .toList();
+      const result = g.V().hasId(id).hasKey("name", "email", "valid", "azertyuiop").toList();
 
-      assert.equal(result.length, 0);
+      expect(result.length).toEqual(0);
     });
   });
 
-  describe("Edge", function() {
-    it("should work", () => {
+  describe("Edge", function () {
+    test("should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.edges()[0];
-      const result = g
-        .E()
-        .hasId(id)
-        .hasKey("weight")
-        .toList()[0] as Edge;
+      const result = g.E().hasId(id).hasKey("weight").toList()[0] as Edge;
 
-      assert.deepEqual(result.properties, omit(graph.getEdgeAttributes(id), ["@type"]));
+      expect(result.properties).toEqual(omit(graph.getEdgeAttributes(id), ["@type"]));
     });
 
-    it("with values should work", () => {
+    test("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.edges()[0];
-      const result = g
-        .E()
-        .hasId(id)
-        .hasKey("weight", "timestamp")
-        .toList()[0] as Edge;
-      assert.deepEqual(result.properties, omit(graph.getEdgeAttributes(id), ["@type"]));
+      const result = g.E().hasId(id).hasKey("weight", "timestamp").toList()[0] as Edge;
+      expect(result.properties).toEqual(omit(graph.getEdgeAttributes(id), ["@type"]));
     });
 
-    it("with non-existing key should work", () => {
+    test("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.edges()[0];
-      const result = g
-        .E()
-        .hasId(id)
-        .hasKey("azertyuiop")
-        .toList();
+      const result = g.E().hasId(id).hasKey("azertyuiop").toList();
 
-      assert.equal(result.length, 0);
+      expect(result.length).toEqual(0);
     });
 
-    it("with values with non-existing key should work", () => {
+    test("with values with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.edges()[0];
-      const result = g
-        .E()
-        .hasId(id)
-        .hasKey("weight", "timestamp", "azertyuiop")
-        .toList();
+      const result = g.E().hasId(id).hasKey("weight", "timestamp", "azertyuiop").toList();
 
-      assert.equal(result.length, 0);
+      expect(result.length).toEqual(0);
     });
   });
 
-  describe("Object", function() {
-    it("should work", () => {
+  describe("Object", function () {
+    test("should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
-      const result = g
-        .V()
-        .hasId(id)
-        .propertiesMap()
-        .hasKey("name")
-        .toList()[0] as Values;
+      const result = g.V().hasId(id).propertiesMap().hasKey("name").toList()[0] as Values;
 
-      assert.deepEqual(result, omit(graph.getNodeAttributes(id), ["@labels"]));
+      expect(result).toEqual(omit(graph.getNodeAttributes(id), ["@labels"]));
     });
 
-    it("with values should work", () => {
+    test("with values should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
-      const result = g
-        .V()
-        .hasId(id)
-        .propertiesMap()
-        .hasKey("name", "email", "valid")
-        .toList()[0] as Values;
+      const result = g.V().hasId(id).propertiesMap().hasKey("name", "email", "valid").toList()[0] as Values;
 
-      assert.deepEqual(result, omit(graph.getNodeAttributes(id), ["@labels"]));
+      expect(result).toEqual(omit(graph.getNodeAttributes(id), ["@labels"]));
     });
 
-    it("with non-existing key should work", () => {
+    test("with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
-      const result = g
-        .V()
-        .hasId(id)
-        .propertiesMap()
-        .hasKey("azertyuiop")
-        .toList();
+      const result = g.V().hasId(id).propertiesMap().hasKey("azertyuiop").toList();
 
-      assert.equal(result.length, 0);
+      expect(result.length).toEqual(0);
     });
 
-    it("with values with non-existing key should work", () => {
+    test("with values with non-existing key should work", () => {
       const g = new GraphTraversalSource(graph);
       const id = graph.nodes()[0];
-      const result = g
-        .V()
-        .hasId(id)
-        .hasKey("name", "email", "valid", "azertyuiop")
-        .toList();
+      const result = g.V().hasId(id).hasKey("name", "email", "valid", "azertyuiop").toList();
 
-      assert.equal(result.length, 0);
+      expect(result.length).toEqual(0);
     });
   });
 });
