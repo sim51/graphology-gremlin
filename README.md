@@ -1,7 +1,7 @@
 # Gremlin DSL for graphology [![CI](https://github.com/sim51/graphology-gremlin/actions/workflows/test.yml/badge.svg)](https://github.com/sim51/graphology-gremlin/actions/workflows/test.yml)
 
 This project allows you to do Gremlin queries on top of a graphology instance.
-For now the project is in alpha, but it already support a good part of the Gremlin langage.
+For now the project is in alpha, but it already supports a good part of all the basis of Gremlin.
 
 Please open a ticket on github if something is missing or not working, it will help me a lot !
 Thanks.

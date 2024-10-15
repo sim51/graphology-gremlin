@@ -1,7 +1,7 @@
 {
   "name": "graphology-gremlin",
-  "version": "1.0.0-alpha2",
-  "description": "Gremlin plugin for graphlogy",
+  "version": "1.0.0-alpha3",
+  "description": "Gremlin plugin for graphology",
   "license": "MIT",
   "author": "Benoit Simard",
   "keywords": [
@@ -9,6 +9,11 @@
     "graph",
     "graphlogy"
   ],
+  "bugs": "https://github.com/sim51/graphology-gremlin/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sim51/graphology-gremlin.git"
+  },
   "type": "module",
   "main": "./lib/graphology-gremlin.umd.min.js",
   "module": "./lib/graphology-gremlin.esm.min.js",
@@ -16,7 +21,7 @@
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "default": "./lib/react-sigma_core.esm.min.js"
+      "default": "./lib/graphology-gremlin.esm.min.js"
     }
   },
   "scripts": {
