@@ -1,34 +1,33 @@
 # Gremlin DSL for graphology [![CI](https://github.com/sim51/graphology-gremlin/actions/workflows/test.yml/badge.svg)](https://github.com/sim51/graphology-gremlin/actions/workflows/test.yml)
 
-## TODO
+This project allows you to do Gremlin queries on top of a graphology instance.
+For now the project is in alpha, but it already support a good part of the Gremlin langage.
 
-- Avoid cycles ?? => before to traverse an edge need to check if it is the traversed path
-  \*\* In the traverser, storing the traversed path ???
-- Graph config : default is a graph without labels and types ?
+Please open a ticket on github if something is missing or not working, it will help me a lot !
+Thanks.
 
-- Conditional types in typescript to have a better type flow ?
-  Should return an array of `Vertex` and not `Vertex | Edge | Object` (ex: hasKey step)
+## How to use it 
 
-```
-g
-  .V()
-  .hasId(nodeId)
-  .hasKey("name")
+* Install the library
+
+```bash
+$> npm install graphology-gremlin
 ```
 
-- Omit config field when creating Edge / Vertex
-  => static function with config, id, props
+* Import it in your script 
 
-* group with projection
-* has filter step
-* predicate + where clauses + as
-* explain / profile
-* step scope (ex count)
+```typescript
+import { GraphTraversalSource } from "graphology-gremlin";
+```
 
-Steps : array of constructor !
+* Create a `GraphTraversalSource` with your graph (a graphology instance)
 
-## Init
+```typescript
+const g = new GraphTraversalSource(graph);
+```
 
-- get type of nodes
-- get type of edges
-- id generator
+* Make your Gremlin query with the created `GraphTraversalSource`
+
+```typescript
+const result = g.V().out("KNOWS").toList();
+```
